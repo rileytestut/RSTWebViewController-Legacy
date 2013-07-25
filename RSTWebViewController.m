@@ -16,6 +16,12 @@
 @property (strong, nonatomic) NJKWebViewProgress *webViewProgress;
 @property (assign, nonatomic) BOOL loadingRequest; // Help prevent false positives
 
+@property (strong, nonatomic) UIBarButtonItem *goBackButton;
+@property (strong, nonatomic) UIBarButtonItem *goForwardButton;
+@property (strong, nonatomic) UIBarButtonItem *shareButton;
+@property (strong, nonatomic) UIBarButtonItem *flexibleSpaceButton;
+@property (strong, nonatomic) UIBarButtonItem *fixedSpaceButton;
+
 @end
 
 @implementation RSTWebViewController
@@ -78,6 +84,12 @@
                                      CGRectGetWidth(self.navigationController.navigationBar.bounds),
                                      CGRectGetHeight(self.progressView.bounds));
     
+    self.goBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back Button"] style:UIBarButtonItemStylePlain target:self action:@selector(goForward:)];
+    self.goForwardButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Forward Button"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
+    self.shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareLink:)];
+    self.flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    self.toolbarItems = @[self.goBackButton, self.flexibleSpaceButton, self.goForwardButton, self.flexibleSpaceButton, self.shareButton];
+    
     if (self.showDoneButton)
     {
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissWebViewController:)];
@@ -125,10 +137,20 @@
 
 - (void)refreshToolbarItems
 {
-    UIBarButtonItem *goBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back Button"] style:UIBarButtonItemStylePlain target:nil action:nil];
-    UIBarButtonItem *goForwardButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Forward Button"] style:UIBarButtonItemStylePlain target:nil action:nil];
-    UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareLink:)];
-    self.toolbarItems = @[goBackButton, goForwardButton, actionButton];
+    self.goBackButton.enabled = [self.webView canGoBack];
+    self.goForwardButton.enabled = [self.webView canGoForward];
+}
+
+#pragma mark - Navigation
+
+- (void)goBack:(UIBarButtonItem *)sender
+{
+    [self.webView goBack];
+}
+
+- (void)goForward:(UIBarButtonItem *)sender
+{
+    [self.webView goForward];
 }
 
 #pragma mark - Sharing
@@ -190,6 +212,8 @@
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
 	// Called multiple times per loading of a large web page, so we do our start methods in webViewProgress:updateProgress:
+    
+    [self refreshToolbarItems];
 }
 
 
@@ -198,6 +222,8 @@
     self.navigationItem.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     self.currentRequest = self.webView.request;
     // Don't hide progress view here, as the webpage isn't visible yet
+    
+    [self refreshToolbarItems];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error

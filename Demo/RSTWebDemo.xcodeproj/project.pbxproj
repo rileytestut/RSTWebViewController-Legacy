@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CC245FDC179677B300902A1D /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC245FDB179677B300902A1D /* Media.xcassets */; };
 		CC4E11A91794AD5500C539A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4E11A81794AD5500C539A5 /* Foundation.framework */; };
 		CC4E11AB1794AD5500C539A5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4E11AA1794AD5500C539A5 /* CoreGraphics.framework */; };
 		CC4E11AD1794AD5500C539A5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4E11AC1794AD5500C539A5 /* UIKit.framework */; };
@@ -23,8 +22,9 @@
 		CC4E11CD1794AD5500C539A5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4E11AC1794AD5500C539A5 /* UIKit.framework */; };
 		CC4E11D51794AD5500C539A5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CC4E11D31794AD5500C539A5 /* InfoPlist.strings */; };
 		CC4E11D71794AD5500C539A5 /* RSTWebDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC4E11D61794AD5500C539A5 /* RSTWebDemoTests.m */; };
-		CC4E11E21794AF0600C539A5 /* RSTWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC4E11E11794AF0600C539A5 /* RSTWebViewController.m */; };
-		CC5F638B179A550A007FDE82 /* NSURLSessionTask+UniqueTaskIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = CC5F638A179A550A007FDE82 /* NSURLSessionTask+UniqueTaskIdentifier.m */; };
+		CCD9FAA917A119DF000B5750 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCD9FAA417A119DF000B5750 /* Media.xcassets */; };
+		CCD9FAAA17A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD9FAA617A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m */; };
+		CCD9FAAB17A119DF000B5750 /* RSTWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD9FAA817A119DF000B5750 /* RSTWebViewController.m */; };
 		E89C8B74C54140A1BBA16173 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F9AA4DE17604AB396324FB8 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +40,6 @@
 
 /* Begin PBXFileReference section */
 		8F9AA4DE17604AB396324FB8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		CC245FDB179677B300902A1D /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = ../../RSTWebViewController/Media.xcassets; sourceTree = "<group>"; };
 		CC4E11A51794AD5500C539A5 /* RSTWebDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSTWebDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC4E11A81794AD5500C539A5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CC4E11AA1794AD5500C539A5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -61,10 +60,11 @@
 		CC4E11D21794AD5500C539A5 /* RSTWebDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RSTWebDemoTests-Info.plist"; sourceTree = "<group>"; };
 		CC4E11D41794AD5500C539A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CC4E11D61794AD5500C539A5 /* RSTWebDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSTWebDemoTests.m; sourceTree = "<group>"; };
-		CC4E11E01794AF0600C539A5 /* RSTWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSTWebViewController.h; path = ../../RSTWebViewController/RSTWebViewController.h; sourceTree = "<group>"; };
-		CC4E11E11794AF0600C539A5 /* RSTWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTWebViewController.m; path = ../../RSTWebViewController/RSTWebViewController.m; sourceTree = "<group>"; };
-		CC5F6389179A550A007FDE82 /* NSURLSessionTask+UniqueTaskIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURLSessionTask+UniqueTaskIdentifier.h"; path = "../../RSTWebViewController/NSURLSessionTask+UniqueTaskIdentifier.h"; sourceTree = "<group>"; };
-		CC5F638A179A550A007FDE82 /* NSURLSessionTask+UniqueTaskIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURLSessionTask+UniqueTaskIdentifier.m"; path = "../../RSTWebViewController/NSURLSessionTask+UniqueTaskIdentifier.m"; sourceTree = "<group>"; };
+		CCD9FAA417A119DF000B5750 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = ../../Media.xcassets; sourceTree = "<group>"; };
+		CCD9FAA517A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURLSessionTask+UniqueTaskIdentifier.h"; path = "../../NSURLSessionTask+UniqueTaskIdentifier.h"; sourceTree = "<group>"; };
+		CCD9FAA617A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURLSessionTask+UniqueTaskIdentifier.m"; path = "../../NSURLSessionTask+UniqueTaskIdentifier.m"; sourceTree = "<group>"; };
+		CCD9FAA717A119DF000B5750 /* RSTWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSTWebViewController.h; path = ../../RSTWebViewController.h; sourceTree = "<group>"; };
+		CCD9FAA817A119DF000B5750 /* RSTWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTWebViewController.m; path = ../../RSTWebViewController.m; sourceTree = "<group>"; };
 		F8D77DA3202246F187702A1A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -134,11 +134,7 @@
 				CC4E11BD1794AD5500C539A5 /* Main_iPad.storyboard */,
 				CC4E11C01794AD5500C539A5 /* ViewController.h */,
 				CC4E11C11794AD5500C539A5 /* ViewController.m */,
-				CC4E11E01794AF0600C539A5 /* RSTWebViewController.h */,
-				CC4E11E11794AF0600C539A5 /* RSTWebViewController.m */,
-				CC5F6389179A550A007FDE82 /* NSURLSessionTask+UniqueTaskIdentifier.h */,
-				CC5F638A179A550A007FDE82 /* NSURLSessionTask+UniqueTaskIdentifier.m */,
-				CC245FDB179677B300902A1D /* Media.xcassets */,
+				CCD9FAAC17A119E3000B5750 /* RSTWebViewController */,
 				CC4E11C31794AD5500C539A5 /* Images.xcassets */,
 				CC4E11AF1794AD5500C539A5 /* Supporting Files */,
 			);
@@ -172,6 +168,18 @@
 				CC4E11D31794AD5500C539A5 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CCD9FAAC17A119E3000B5750 /* RSTWebViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CCD9FAA517A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.h */,
+				CCD9FAA617A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m */,
+				CCD9FAA717A119DF000B5750 /* RSTWebViewController.h */,
+				CCD9FAA817A119DF000B5750 /* RSTWebViewController.m */,
+				CCD9FAA417A119DF000B5750 /* Media.xcassets */,
+			);
+			name = RSTWebViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,7 +260,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC245FDC179677B300902A1D /* Media.xcassets in Resources */,
+				CCD9FAA917A119DF000B5750 /* Media.xcassets in Resources */,
 				CC4E11BF1794AD5500C539A5 /* Main_iPad.storyboard in Resources */,
 				CC4E11C41794AD5500C539A5 /* Images.xcassets in Resources */,
 				CC4E11BC1794AD5500C539A5 /* Main_iPhone.storyboard in Resources */,
@@ -307,10 +315,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC4E11C21794AD5500C539A5 /* ViewController.m in Sources */,
+				CCD9FAAB17A119DF000B5750 /* RSTWebViewController.m in Sources */,
+				CCD9FAAA17A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m in Sources */,
 				CC4E11B91794AD5500C539A5 /* AppDelegate.m in Sources */,
-				CC5F638B179A550A007FDE82 /* NSURLSessionTask+UniqueTaskIdentifier.m in Sources */,
 				CC4E11B51794AD5500C539A5 /* main.m in Sources */,
-				CC4E11E21794AF0600C539A5 /* RSTWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

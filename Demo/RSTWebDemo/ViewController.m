@@ -20,7 +20,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    self.title = @"Mail Feed";
+    self.title = @"Demo";
 }
 
 - (void)didReceiveMemoryWarning
@@ -30,7 +30,7 @@
 }
 
 - (IBAction)presentWebViewController:(id)sender {
-    RSTWebViewController *webViewController = [[RSTWebViewController alloc] initWithAddress:@"http://m.coolrom.com/roms/gba/14604/Pokemon_Emerald.php"];
+    RSTWebViewController *webViewController = [[RSTWebViewController alloc] initWithAddress:@"http://www.cnn.com"];
     [self.navigationController pushViewController:webViewController animated:YES];
 }
 

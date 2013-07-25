@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>54A19304-865A-47CB-9D14-FD431DB94C4D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>RSTWebDemo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>57A0EBF4-E301-4FE1-B8AF-9D65B97FEA33</key>
+		<string>https://bitbucket.org/rileytestut/rstwebviewcontroller.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Demo/RSTWebDemo.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>57A0EBF4-E301-4FE1-B8AF-9D65B97FEA33</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://bitbucket.org/rileytestut/rstwebviewcontroller.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>57A0EBF4-E301-4FE1-B8AF-9D65B97FEA33</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>57A0EBF4-E301-4FE1-B8AF-9D65B97FEA33</string>
+			<key>IDESourceControlWCCName</key>
+			<string>RSTWebViewController</string>
+		</dict>
+	</array>
+</dict>
+</plist>
