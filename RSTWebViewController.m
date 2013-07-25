@@ -84,8 +84,8 @@
                                      CGRectGetWidth(self.navigationController.navigationBar.bounds),
                                      CGRectGetHeight(self.progressView.bounds));
     
-    self.goBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back Button"] style:UIBarButtonItemStylePlain target:self action:@selector(goForward:)];
-    self.goForwardButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Forward Button"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
+    self.goBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back Button"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
+    self.goForwardButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Forward Button"] style:UIBarButtonItemStylePlain target:self action:@selector(goForward:)];
     self.shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareLink:)];
     self.flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     self.toolbarItems = @[self.goBackButton, self.flexibleSpaceButton, self.goForwardButton, self.flexibleSpaceButton, self.shareButton];
