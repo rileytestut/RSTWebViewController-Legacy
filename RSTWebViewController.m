@@ -8,9 +8,7 @@
 #import "RSTWebViewController.h"
 #import "NJKWebViewProgress.h"
 
-@interface RSTWebViewController () <UIWebViewDelegate, NJKWebViewProgressDelegate, NSURLSessionDownloadDelegate> {
-    NSInteger _loadingFrameCount;
-}
+@interface RSTWebViewController () <UIWebViewDelegate, NJKWebViewProgressDelegate, NSURLSessionDownloadDelegate>
 
 @property (strong, nonatomic) NSURLRequest *currentRequest;
 @property (strong, nonatomic) UIProgressView *progressView;
@@ -200,11 +198,7 @@
             
             if (progress >= 1.0)
             {
-                self.loadingRequest = NO;
-                [self hideProgressViewWithCompletion:NULL];
-                
-                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                [self refreshToolbarItems];
+                [self finishLoading];
             }
         });
     }
@@ -214,8 +208,6 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    _loadingFrameCount++;
-    
 	// Called multiple times per loading of a large web page, so we do our start methods in webViewProgress:updateProgress:
     
     [self refreshToolbarItems];
@@ -227,13 +219,6 @@
     self.navigationItem.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     self.currentRequest = self.webView.request;
     // Don't hide progress view here, as the webpage isn't necessarily visible yet
-    
-    _loadingFrameCount--;
-    
-    if (_loadingFrameCount == 0)
-    {
-        [self modifyLoadedHTML];
-    }
     
     [self refreshToolbarItems];
 }
@@ -250,9 +235,9 @@
 {
     self.loadingRequest = YES;
     
-    if ([self.delegate respondsToSelector:@selector(webViewController:shouldStartDownloadWithRequest:)])
+    if ([self.downloadDelegate respondsToSelector:@selector(webViewController:shouldStartDownloadWithRequest:)])
     {
-        if ([self.delegate webViewController:self shouldStartDownloadWithRequest:request])
+        if ([self.downloadDelegate webViewController:self shouldStartDownloadWithRequest:request])
         {
             [self startDownloadWithRequest:request];
         }
@@ -272,6 +257,20 @@
     
 }
 
+- (void)finishLoading
+{
+    self.loadingRequest = NO;
+    [self hideProgressViewWithCompletion:NULL];
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [self refreshToolbarItems];
+    
+    if ([self.delegate respondsToSelector:@selector(webViewControllerDidFinishLoad:)])
+    {
+        [self.delegate webViewControllerDidFinishLoad:self];
+    }
+}
+
 - (void)startDownloadWithRequest:(NSURLRequest *)request
 {
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -283,9 +282,9 @@
     NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithRequest:request];
     downloadTask.uniqueTaskIdentifier = [[NSUUID UUID] UUIDString];
     
-    if ([self.delegate respondsToSelector:@selector(webViewController:willStartDownloadWithTask:startDownloadBlock:)])
+    if ([self.downloadDelegate respondsToSelector:@selector(webViewController:willStartDownloadWithTask:startDownloadBlock:)])
     {
-        [self.delegate webViewController:self willStartDownloadWithTask:downloadTask startDownloadBlock:^(BOOL shouldContinue)
+        [self.downloadDelegate webViewController:self willStartDownloadWithTask:downloadTask startDownloadBlock:^(BOOL shouldContinue)
         {
             if (shouldContinue)
             {
@@ -308,25 +307,25 @@
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
 {
-    if ([self.delegate respondsToSelector:@selector(webViewController:downloadTask:totalBytesDownloaded:totalBytesExpected:)])
+    if ([self.downloadDelegate respondsToSelector:@selector(webViewController:downloadTask:totalBytesDownloaded:totalBytesExpected:)])
     {
-        [self.delegate webViewController:self downloadTask:downloadTask totalBytesDownloaded:totalBytesWritten totalBytesExpected:totalBytesExpectedToWrite];
+        [self.downloadDelegate webViewController:self downloadTask:downloadTask totalBytesDownloaded:totalBytesWritten totalBytesExpected:totalBytesExpectedToWrite];
     }
 }
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location
 {
-    if ([self.delegate respondsToSelector:@selector(webViewController:downloadTask:didDownloadFileToURL:)])
+    if ([self.downloadDelegate respondsToSelector:@selector(webViewController:downloadTask:didDownloadFileToURL:)])
     {
-        [self.delegate webViewController:self downloadTask:downloadTask didDownloadFileToURL:location];
+        [self.downloadDelegate webViewController:self downloadTask:downloadTask didDownloadFileToURL:location];
     }
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
-    if ([self.delegate respondsToSelector:@selector(webViewController:downloadTask:didCompleteDownloadWithError:)])
+    if ([self.downloadDelegate respondsToSelector:@selector(webViewController:downloadTask:didCompleteDownloadWithError:)])
     {
-        [self.delegate webViewController:self downloadTask:(NSURLSessionDownloadTask *)task didCompleteDownloadWithError:error];
+        [self.downloadDelegate webViewController:self downloadTask:(NSURLSessionDownloadTask *)task didCompleteDownloadWithError:error];
     }
 }
 

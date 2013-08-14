@@ -25,6 +25,18 @@ typedef NS_ENUM(NSInteger, RSTWebViewControllerSharingActivity) {
 
 @protocol RSTWebViewControllerDelegate <NSObject>
 
+/**
+ *	Called when the web view is actually done loading content, unlike the UIWebViewDelegate method
+ *  webViewDidFinishLoad: which is called after every frame.
+ *
+ *	@param	webViewController	The RSTWebViewController loading the content
+ */
+- (void)webViewControllerDidFinishLoad:(RSTWebViewController *)webViewController;
+
+@end
+
+@protocol RSTWebViewControllerDownloadDelegate <NSObject>
+
 @optional
 
 // Return YES to tell RSTWebViewController to create a NSURLSession object and start a NSURLSessionDownloadTask.
@@ -49,7 +61,15 @@ typedef NS_ENUM(NSInteger, RSTWebViewControllerSharingActivity) {
 
 @interface RSTWebViewController : UIViewController
 
+/**
+ *	The object that acts as the delegate of the receiving RSTWebViewController.
+ */
 @property (weak, nonatomic) id <RSTWebViewControllerDelegate> delegate;
+
+/**
+ *	Delegate object to be notified about the file downloading process.
+ */
+@property (weak, nonatomic) id <RSTWebViewControllerDownloadDelegate> downloadDelegate;
 
 // UIWebView used to display webpages
 @property (strong, nonatomic) UIWebView *webView;
