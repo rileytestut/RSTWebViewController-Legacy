@@ -115,7 +115,7 @@
     [self.navigationController.navigationBar addSubview:self.progressView];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     
@@ -129,6 +129,11 @@
         
         [self.navigationController setToolbarHidden:YES animated:animated];
     }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
     
     [self hideProgressViewWithCompletion:^{
         [self.progressView removeFromSuperview];
@@ -155,7 +160,8 @@
 
 #pragma mark - Sharing
 
-- (void)shareLink:(UIBarButtonItem *)barButtonItem {
+- (void)shareLink:(UIBarButtonItem *)barButtonItem
+{
     NSString *currentAddress = [self.webView stringByEvaluatingJavaScriptFromString:@"window.location.href"];
     NSURL *url = [NSURL URLWithString:currentAddress];
     
@@ -193,12 +199,17 @@
             // It's also common for the progress to be 1.0, and then start showing the actual progress. So this is the *only* exception to the don't-display-less-progress rule.
             if ((progress > self.progressView.progress) || self.progressView.progress >= 1.0f)
             {
+                if (self.progressView.alpha == 0.0)
+                {
+                    [self didStartLoading];
+                }
+                
                 [self.progressView setProgress:progress animated:YES];
             }
             
             if (progress >= 1.0)
             {
-                [self finishLoading];
+                [self didFinishLoading];
             }
         });
     }
@@ -243,10 +254,6 @@
         }
     }
     
-    [self showProgressView];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [self refreshToolbarItems];
-    
     return YES;
 }
 
@@ -257,7 +264,14 @@
     
 }
 
-- (void)finishLoading
+- (void)didStartLoading
+{
+    [self showProgressView];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [self refreshToolbarItems];
+}
+
+- (void)didFinishLoading
 {
     self.loadingRequest = NO;
     [self hideProgressViewWithCompletion:NULL];
@@ -345,10 +359,6 @@
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return UIInterfaceOrientationMaskAllButUpsideDown;
-    }
-    
     return UIInterfaceOrientationMaskAll;
 }
 
