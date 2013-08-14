@@ -8,9 +8,10 @@
 #import "RSTWebViewController.h"
 #import "NJKWebViewProgress.h"
 
-@interface RSTWebViewController () <UIWebViewDelegate, NJKWebViewProgressDelegate, NSURLSessionDownloadDelegate>
+@interface RSTWebViewController () <UIWebViewDelegate, NJKWebViewProgressDelegate, NSURLSessionDownloadDelegate> {
+    NSInteger _loadingFrameCount;
+}
 
-@property (strong, nonatomic) UIWebView *webView;
 @property (strong, nonatomic) NSURLRequest *currentRequest;
 @property (strong, nonatomic) UIProgressView *progressView;
 @property (strong, nonatomic) NJKWebViewProgress *webViewProgress;
@@ -68,6 +69,7 @@
     self.webView = [[UIWebView alloc] init];
     self.webView.delegate = self.webViewProgress;
     self.webView.backgroundColor = [UIColor whiteColor];
+    self.webView.scrollView.backgroundColor = [UIColor whiteColor];
     self.webView.scalesPageToFit = YES;
     self.view = self.webView;
     
@@ -185,9 +187,16 @@
 
 - (void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
 {
-    if (self.loadingRequest) {
+    if (self.loadingRequest)
+    {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.progressView setProgress:progress animated:YES];
+            
+            // Prevent the progress view from ever resetting back to a smaller progress value.
+            // It's also common for the progress to be 1.0, and then start showing the actual progress. So this is the *only* exception to the don't-display-less-progress rule.
+            if ((progress > self.progressView.progress) || self.progressView.progress >= 1.0f)
+            {
+                [self.progressView setProgress:progress animated:YES];
+            }
             
             if (progress >= 1.0)
             {
@@ -195,12 +204,6 @@
                 [self hideProgressViewWithCompletion:NULL];
                 
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                [self refreshToolbarItems];
-            }
-            else if (self.progressView.alpha <= 0.01)
-            {
-                [self showProgressView];
-                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
                 [self refreshToolbarItems];
             }
         });
@@ -211,6 +214,8 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
+    _loadingFrameCount++;
+    
 	// Called multiple times per loading of a large web page, so we do our start methods in webViewProgress:updateProgress:
     
     [self refreshToolbarItems];
@@ -221,7 +226,14 @@
 {
     self.navigationItem.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     self.currentRequest = self.webView.request;
-    // Don't hide progress view here, as the webpage isn't visible yet
+    // Don't hide progress view here, as the webpage isn't necessarily visible yet
+    
+    _loadingFrameCount--;
+    
+    if (_loadingFrameCount == 0)
+    {
+        [self modifyLoadedHTML];
+    }
     
     [self refreshToolbarItems];
 }
@@ -246,10 +258,19 @@
         }
     }
     
+    [self showProgressView];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [self refreshToolbarItems];
+    
     return YES;
 }
 
 #pragma mark - Private
+
+- (void)modifyLoadedHTML
+{
+    
+}
 
 - (void)startDownloadWithRequest:(NSURLRequest *)request
 {

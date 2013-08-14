@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger, RSTWebViewControllerSharingActivity) {
 // Or, if you choose to, you can return NO, and then implement your own downloading logic via NSURLSession with the NSURLRequest
 - (BOOL)webViewController:(RSTWebViewController *)webViewController shouldStartDownloadWithRequest:(NSURLRequest *)request;
 
-// You must call startDownloadBlock, or else the download will never start. This was you can display an alert to the user asking if they want to download the file.
+// If implemented, you must call startDownloadBlock, or else the download will never start. This was you can display an alert to the user asking if they want to download the file.
 // If needed, you can keep a reference to the NSURLSessionDownloadTask to suspend/cancel during the download. You can access the original request via downloadTask.originalRequest, or the current one via downloadTask.currentRequest
 - (void)webViewController:(RSTWebViewController *)webViewController willStartDownloadWithTask:(NSURLSessionDownloadTask *)downloadTask startDownloadBlock:(RSTWebViewControllerStartDownloadBlock)completionHandler;
 
@@ -50,6 +50,9 @@ typedef NS_ENUM(NSInteger, RSTWebViewControllerSharingActivity) {
 @interface RSTWebViewController : UIViewController
 
 @property (weak, nonatomic) id <RSTWebViewControllerDelegate> delegate;
+
+// UIWebView used to display webpages
+@property (strong, nonatomic) UIWebView *webView;
 
 // Included UIActivities to be displayed when sharing a link. Default is RSTWebViewControllerSharingActivityAll
 @property (assign, nonatomic) RSTWebViewControllerSharingActivity supportedSharingActivities;

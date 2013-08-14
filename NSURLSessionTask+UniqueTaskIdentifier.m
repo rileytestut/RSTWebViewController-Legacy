@@ -12,16 +12,14 @@
 @implementation NSObject (UniqueTaskIdentifier)
 @dynamic uniqueTaskIdentifier;
 
-static char uniqueTaskIdentifierKey;
-
 - (void)setUniqueTaskIdentifier:(NSString *)uniqueTaskIdentifier
 {
-    objc_setAssociatedObject(self, &uniqueTaskIdentifierKey, uniqueTaskIdentifier, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(uniqueTaskIdentifier), uniqueTaskIdentifier, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 - (NSString *)uniqueTaskIdentifier
 {
-    return objc_getAssociatedObject(self, &uniqueTaskIdentifierKey);
+    return objc_getAssociatedObject(self, @selector(uniqueTaskIdentifier));
 }
 
 @end
