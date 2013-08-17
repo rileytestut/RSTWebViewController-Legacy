@@ -21,6 +21,11 @@
 @property (strong, nonatomic) UIBarButtonItem *flexibleSpaceButton;
 @property (strong, nonatomic) UIBarButtonItem *fixedSpaceButton;
 
+// Refreshing
+@property (assign, nonatomic) UIBarButtonItem *refreshButton; // Assigned either loadButton or stopLoadButton
+@property (strong, nonatomic) UIBarButtonItem *reloadButton;
+@property (strong, nonatomic) UIBarButtonItem *stopLoadButton;
+
 @end
 
 @implementation RSTWebViewController
@@ -86,9 +91,14 @@
     
     self.goBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back Button"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
     self.goForwardButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Forward Button"] style:UIBarButtonItemStylePlain target:self action:@selector(goForward:)];
+    self.reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload:)];
+    self.stopLoadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(stopLoading:)];
     self.shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareLink:)];
     self.flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    self.toolbarItems = @[self.goBackButton, self.flexibleSpaceButton, self.goForwardButton, self.flexibleSpaceButton, self.shareButton];
+    
+    self.refreshButton = self.reloadButton;
+    
+    [self refreshToolbarItems];
     
     if (self.showDoneButton)
     {
@@ -144,6 +154,13 @@
 {
     self.goBackButton.enabled = [self.webView canGoBack];
     self.goForwardButton.enabled = [self.webView canGoForward];
+    
+    // The following line is purposefully commented out. Sometimes, longrunning javascript or other elements may take longer to load, but to the user it sometimes looks like the web view has stalled.
+    // We update these in didStartLoading and didFinishLoading to match the state of these buttons to the state of the progress indicator
+    
+    // self.refreshButton = [self.webView isLoading] ? self.stopLoadButton : self.reloadButton;
+    
+    self.toolbarItems = @[self.goBackButton, self.flexibleSpaceButton, self.goForwardButton, self.flexibleSpaceButton, self.refreshButton, self.flexibleSpaceButton, self.shareButton];
 }
 
 #pragma mark - Navigation
@@ -156,6 +173,18 @@
 - (void)goForward:(UIBarButtonItem *)sender
 {
     [self.webView goForward];
+}
+
+#pragma mark - Refreshing
+
+- (void)reload:(UIBarButtonItem *)sender
+{
+    [self.webView reload];
+}
+
+- (void)stopLoading:(UIBarButtonItem *)sender
+{
+    [self.webView stopLoading];
 }
 
 #pragma mark - Sharing
@@ -183,6 +212,10 @@
     [UIView animateWithDuration:0.4 animations:^{
         self.progressView.alpha = 0.0;
     } completion:^(BOOL finished) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.progressView.progress = 0.0;
+        });
+        
         if (completion) {
             completion();
         }
@@ -266,17 +299,24 @@
 
 - (void)didStartLoading
 {
+    NSLog(@"Start Loading");
     [self showProgressView];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    self.refreshButton = self.stopLoadButton;
+    
     [self refreshToolbarItems];
 }
 
 - (void)didFinishLoading
 {
+    NSLog(@"End Loading");
     self.loadingRequest = NO;
     [self hideProgressViewWithCompletion:NULL];
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    
+    self.refreshButton = self.reloadButton;
     [self refreshToolbarItems];
     
     if ([self.delegate respondsToSelector:@selector(webViewControllerDidFinishLoad:)])
