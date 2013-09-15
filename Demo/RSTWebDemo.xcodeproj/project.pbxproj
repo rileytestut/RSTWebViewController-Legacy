@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC29A0D717E21755005AF95E /* safari@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC29A0D617E21755005AF95E /* safari@2x.png */; };
 		CC4E11A91794AD5500C539A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4E11A81794AD5500C539A5 /* Foundation.framework */; };
 		CC4E11AB1794AD5500C539A5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4E11AA1794AD5500C539A5 /* CoreGraphics.framework */; };
 		CC4E11AD1794AD5500C539A5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4E11AC1794AD5500C539A5 /* UIKit.framework */; };
@@ -25,6 +26,7 @@
 		CCD9FAA917A119DF000B5750 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCD9FAA417A119DF000B5750 /* Media.xcassets */; };
 		CCD9FAAA17A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD9FAA617A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m */; };
 		CCD9FAAB17A119DF000B5750 /* RSTWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD9FAA817A119DF000B5750 /* RSTWebViewController.m */; };
+		CCEE289117E131E100205302 /* RSTSafariActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEE289017E131E100205302 /* RSTSafariActivity.m */; };
 		E89C8B74C54140A1BBA16173 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F9AA4DE17604AB396324FB8 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		8F9AA4DE17604AB396324FB8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC29A0D617E21755005AF95E /* safari@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "safari@2x.png"; sourceTree = "<group>"; };
 		CC4E11A51794AD5500C539A5 /* RSTWebDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSTWebDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC4E11A81794AD5500C539A5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CC4E11AA1794AD5500C539A5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -65,6 +68,8 @@
 		CCD9FAA617A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURLSessionTask+UniqueTaskIdentifier.m"; path = "../../NSURLSessionTask+UniqueTaskIdentifier.m"; sourceTree = "<group>"; };
 		CCD9FAA717A119DF000B5750 /* RSTWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSTWebViewController.h; path = ../../RSTWebViewController.h; sourceTree = "<group>"; };
 		CCD9FAA817A119DF000B5750 /* RSTWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTWebViewController.m; path = ../../RSTWebViewController.m; sourceTree = "<group>"; };
+		CCEE288F17E131E100205302 /* RSTSafariActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSTSafariActivity.h; path = ../../../RSTSafariActivity/RSTSafariActivity.h; sourceTree = "<group>"; };
+		CCEE289017E131E100205302 /* RSTSafariActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTSafariActivity.m; path = ../../../RSTSafariActivity/RSTSafariActivity.m; sourceTree = "<group>"; };
 		F8D77DA3202246F187702A1A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -134,6 +139,7 @@
 				CC4E11BD1794AD5500C539A5 /* Main_iPad.storyboard */,
 				CC4E11C01794AD5500C539A5 /* ViewController.h */,
 				CC4E11C11794AD5500C539A5 /* ViewController.m */,
+				CCEE288E17E131B700205302 /* RSTSafariActivity */,
 				CCD9FAAC17A119E3000B5750 /* RSTWebViewController */,
 				CC4E11C31794AD5500C539A5 /* Images.xcassets */,
 				CC4E11AF1794AD5500C539A5 /* Supporting Files */,
@@ -180,6 +186,16 @@
 				CCD9FAA417A119DF000B5750 /* Media.xcassets */,
 			);
 			name = RSTWebViewController;
+			sourceTree = "<group>";
+		};
+		CCEE288E17E131B700205302 /* RSTSafariActivity */ = {
+			isa = PBXGroup;
+			children = (
+				CCEE288F17E131E100205302 /* RSTSafariActivity.h */,
+				CCEE289017E131E100205302 /* RSTSafariActivity.m */,
+				CC29A0D617E21755005AF95E /* safari@2x.png */,
+			);
+			name = RSTSafariActivity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,6 +280,7 @@
 				CC4E11BF1794AD5500C539A5 /* Main_iPad.storyboard in Resources */,
 				CC4E11C41794AD5500C539A5 /* Images.xcassets in Resources */,
 				CC4E11BC1794AD5500C539A5 /* Main_iPhone.storyboard in Resources */,
+				CC29A0D717E21755005AF95E /* safari@2x.png in Resources */,
 				CC4E11B31794AD5500C539A5 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,6 +331,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCEE289117E131E100205302 /* RSTSafariActivity.m in Sources */,
 				CC4E11C21794AD5500C539A5 /* ViewController.m in Sources */,
 				CCD9FAAB17A119DF000B5750 /* RSTWebViewController.m in Sources */,
 				CCD9FAAA17A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m in Sources */,

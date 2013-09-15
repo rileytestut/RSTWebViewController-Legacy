@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '6.0'
   s.license      = 'MIT'
   s.author = {
-    'Riley Testut' => 'rileytestut@gmail.com'
+    'Riley Testut' => 'riley@rileytestut.com'
   }
   s.source = {
     :git => 'https://github.com/rileytestut/RSTWebViewController.git',
