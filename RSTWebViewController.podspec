@@ -15,7 +15,5 @@ Pod::Spec.new do |s|
   s.source_files = '*.{h,m}'
   s.resources = ['Media.xcassets/Back Button.imageset/*.png', 'Media.xcassets/Forward Button.imageset/*.png']
   s.dependency     'NJKWebViewProgress'
-  s.dependency     "AFNetworking", "2.0.0-RC3"
-  s.dependency     "AFNetworking/UIKit+AFNetworking", "2.0.0-RC3"
   s.requires_arc = true
 end
