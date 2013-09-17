@@ -7,6 +7,7 @@
 
 #import "RSTWebViewController.h"
 #import "NJKWebViewProgress.h"
+#import "../RSTSafariActivity/RSTSafariActivity.h"
 
 @interface RSTWebViewController () <UIWebViewDelegate, NJKWebViewProgressDelegate, NSURLSessionDownloadDelegate>
 
@@ -194,8 +195,32 @@
     NSString *currentAddress = [self.webView stringByEvaluatingJavaScriptFromString:@"window.location.href"];
     NSURL *url = [NSURL URLWithString:currentAddress];
     
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[url] applicationActivities:self.additionalSharingActivities];
+    NSArray *applicationActivities = [self applicationActivities];
+   // NSArray *
+    
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[url] applicationActivities:applicationActivities];
+    activityViewController.excludedActivityTypes = [self excludedActivityTypes];
     [self presentViewController:activityViewController animated:YES completion:NULL];
+}
+
+- (NSArray *)applicationActivities
+{
+    BOOL useAllActivities = (self.supportedSharingActivities & RSTWebViewControllerSharingActivityAll) == RSTWebViewControllerSharingActivityAll;
+    
+    NSMutableArray *applicationActivities = [NSMutableArray array];
+    
+    if (((self.supportedSharingActivities & RSTWebViewControllerSharingActivitySafari) == RSTWebViewControllerSharingActivitySafari) || useAllActivities)
+    {
+        RSTSafariActivity *activity = [[RSTSafariActivity alloc] init];
+        [applicationActivities addObject:activity];
+    }
+    
+    return applicationActivities;
+}
+
+- (NSArray *)excludedActivityTypes
+{
+    return nil;
 }
 
 #pragma mark - Progress View
@@ -272,7 +297,7 @@
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self refreshToolbarItems];
     
-    [self hideProgressViewWithCompletion:NULL];
+    [self didFinishLoading];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType

@@ -11,14 +11,14 @@
 
 typedef void(^RSTWebViewControllerStartDownloadBlock)(BOOL shouldContinue);
 
-typedef NS_ENUM(NSInteger, RSTWebViewControllerSharingActivity) {
+typedef NS_OPTIONS(NSInteger, RSTWebViewControllerSharingActivity) {
     RSTWebViewControllerSharingActivityNone = 0,
-    RSTWebViewControllerSharingActivityAll = 1,
     RSTWebViewControllerSharingActivitySafari = 1 << 0,
     RSTWebViewControllerSharingActivityChrome = 1 << 1,
     RSTWebViewControllerSharingActivityMail = 1 << 2,
     RSTWebViewControllerSharingActivityCopy = 1 << 3,
     RSTWebViewControllerSharingActivityMessage = 1 << 4,
+    RSTWebViewControllerSharingActivityAll = 2,
 };
 
 @class RSTWebViewController;
