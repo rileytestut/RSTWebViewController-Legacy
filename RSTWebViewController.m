@@ -7,7 +7,7 @@
 
 #import "RSTWebViewController.h"
 #import "NJKWebViewProgress.h"
-#import "../RSTSafariActivity/RSTSafariActivity.h"
+#import "RSTSafariActivity.h"
 
 @interface RSTWebViewController () <UIWebViewDelegate, NJKWebViewProgressDelegate, NSURLSessionDownloadDelegate>
 
@@ -159,7 +159,7 @@
     // The following line is purposefully commented out. Sometimes, longrunning javascript or other elements may take longer to load, but to the user it sometimes looks like the web view has stalled.
     // We update these in didStartLoading and didFinishLoading to match the state of these buttons to the state of the progress indicator
     
-    // self.refreshButton = [self.webView isLoading] ? self.stopLoadButton : self.reloadButton;
+    self.refreshButton = [self.webView isLoading] ? self.stopLoadButton : self.reloadButton;
     
     self.toolbarItems = @[self.goBackButton, self.flexibleSpaceButton, self.goForwardButton, self.flexibleSpaceButton, self.refreshButton, self.flexibleSpaceButton, self.shareButton];
 }
@@ -317,31 +317,22 @@
 
 #pragma mark - Private
 
-- (void)modifyLoadedHTML
-{
-    
-}
 
 - (void)didStartLoading
 {
-    NSLog(@"Start Loading");
     [self showProgressView];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-    self.refreshButton = self.stopLoadButton;
     
     [self refreshToolbarItems];
 }
 
 - (void)didFinishLoading
 {
-    NSLog(@"End Loading");
     self.loadingRequest = NO;
     [self hideProgressViewWithCompletion:NULL];
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
-    self.refreshButton = self.reloadButton;
     [self refreshToolbarItems];
     
     if ([self.delegate respondsToSelector:@selector(webViewControllerDidFinishLoad:)])
@@ -349,6 +340,8 @@
         [self.delegate webViewControllerDidFinishLoad:self];
     }
 }
+
+#pragma mark - Downloading
 
 - (void)startDownloadWithRequest:(NSURLRequest *)request
 {

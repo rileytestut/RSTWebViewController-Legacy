@@ -7,12 +7,16 @@
 //
 
 #import "AppDelegate.h"
+#import "RSTWebViewControllerProtocol.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    //[NSURLProtocol registerClass:[RSTWebViewControllerProtocol class]];
+    
     return YES;
 }
 							

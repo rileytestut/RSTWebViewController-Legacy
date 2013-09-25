@@ -26,7 +26,8 @@
 		CCD9FAA917A119DF000B5750 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCD9FAA417A119DF000B5750 /* Media.xcassets */; };
 		CCD9FAAA17A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD9FAA617A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m */; };
 		CCD9FAAB17A119DF000B5750 /* RSTWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD9FAA817A119DF000B5750 /* RSTWebViewController.m */; };
-		CCEE289117E131E100205302 /* RSTSafariActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEE289017E131E100205302 /* RSTSafariActivity.m */; };
+		CCF624A517F15B62003B0FF1 /* RSTSafariActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CCF624A417F15B62003B0FF1 /* RSTSafariActivity.m */; };
+		CCF624AB17F15BAA003B0FF1 /* RSTWebViewControllerProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = CCF624AA17F15BAA003B0FF1 /* RSTWebViewControllerProtocol.m */; };
 		E89C8B74C54140A1BBA16173 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F9AA4DE17604AB396324FB8 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -68,8 +69,10 @@
 		CCD9FAA617A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURLSessionTask+UniqueTaskIdentifier.m"; path = "../../NSURLSessionTask+UniqueTaskIdentifier.m"; sourceTree = "<group>"; };
 		CCD9FAA717A119DF000B5750 /* RSTWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSTWebViewController.h; path = ../../RSTWebViewController.h; sourceTree = "<group>"; };
 		CCD9FAA817A119DF000B5750 /* RSTWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTWebViewController.m; path = ../../RSTWebViewController.m; sourceTree = "<group>"; };
-		CCEE288F17E131E100205302 /* RSTSafariActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSTSafariActivity.h; path = ../../../RSTSafariActivity/RSTSafariActivity.h; sourceTree = "<group>"; };
-		CCEE289017E131E100205302 /* RSTSafariActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTSafariActivity.m; path = ../../../RSTSafariActivity/RSTSafariActivity.m; sourceTree = "<group>"; };
+		CCF624A317F15B62003B0FF1 /* RSTSafariActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSTSafariActivity.h; path = ../../RSTSafariActivity.h; sourceTree = "<group>"; };
+		CCF624A417F15B62003B0FF1 /* RSTSafariActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTSafariActivity.m; path = ../../RSTSafariActivity.m; sourceTree = "<group>"; };
+		CCF624A917F15BAA003B0FF1 /* RSTWebViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSTWebViewControllerProtocol.h; path = ../../RSTWebViewControllerProtocol.h; sourceTree = "<group>"; };
+		CCF624AA17F15BAA003B0FF1 /* RSTWebViewControllerProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTWebViewControllerProtocol.m; path = ../../RSTWebViewControllerProtocol.m; sourceTree = "<group>"; };
 		F8D77DA3202246F187702A1A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -183,6 +186,8 @@
 				CCD9FAA617A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m */,
 				CCD9FAA717A119DF000B5750 /* RSTWebViewController.h */,
 				CCD9FAA817A119DF000B5750 /* RSTWebViewController.m */,
+				CCF624A917F15BAA003B0FF1 /* RSTWebViewControllerProtocol.h */,
+				CCF624AA17F15BAA003B0FF1 /* RSTWebViewControllerProtocol.m */,
 				CCD9FAA417A119DF000B5750 /* Media.xcassets */,
 			);
 			name = RSTWebViewController;
@@ -191,8 +196,8 @@
 		CCEE288E17E131B700205302 /* RSTSafariActivity */ = {
 			isa = PBXGroup;
 			children = (
-				CCEE288F17E131E100205302 /* RSTSafariActivity.h */,
-				CCEE289017E131E100205302 /* RSTSafariActivity.m */,
+				CCF624A317F15B62003B0FF1 /* RSTSafariActivity.h */,
+				CCF624A417F15B62003B0FF1 /* RSTSafariActivity.m */,
 				CC29A0D617E21755005AF95E /* safari@2x.png */,
 			);
 			name = RSTSafariActivity;
@@ -331,7 +336,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCEE289117E131E100205302 /* RSTSafariActivity.m in Sources */,
+				CCF624AB17F15BAA003B0FF1 /* RSTWebViewControllerProtocol.m in Sources */,
+				CCF624A517F15B62003B0FF1 /* RSTSafariActivity.m in Sources */,
 				CC4E11C21794AD5500C539A5 /* ViewController.m in Sources */,
 				CCD9FAAB17A119DF000B5750 /* RSTWebViewController.m in Sources */,
 				CCD9FAAA17A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m in Sources */,
