@@ -29,6 +29,9 @@
 @end
 
 @implementation RSTWebViewController
+{
+    BOOL _performedInitialRequest;
+}
 
 #pragma mark - Initialization
 
@@ -75,7 +78,8 @@
     self.webView.scalesPageToFit = YES;
     self.view = self.webView;
     
-    [self.webView loadRequest:self.currentRequest];
+    // iOS 7 bug: bar of black appears at bottom of web view until first page is loaded. This loads a white page, then we'll load the request
+    [self.webView loadHTMLString:@"<html><body bgcolor='#FFFFFF'></body></html>" baseURL:nil];
 }
 
 - (void)viewDidLoad
@@ -90,9 +94,9 @@
     
     self.goBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back Button"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
     self.goForwardButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Forward Button"] style:UIBarButtonItemStylePlain target:self action:@selector(goForward:)];
-    self.reloadButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Refresh Button"] style:UIBarButtonItemStylePlain target:self action:@selector(reload:)];
+    self.reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload:)];
     self.stopLoadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(stopLoading:)];
-    self.shareButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Share Button"] style:UIBarButtonItemStylePlain target:self action:@selector(shareLink:)];
+    self.shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareLink:)];
     self.flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     self.refreshButton = self.reloadButton;
@@ -104,22 +108,16 @@
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissWebViewController:)];
         [self.navigationItem setRightBarButtonItem:doneButton];
     }
+    
+    [UIView performWithoutAnimation:^{
+        [self.navigationController setToolbarHidden:NO animated:NO];
+    }];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-    {
-        if (self.presentingViewController)
-        {
-            // Presenting modally
-            animated = NO;
-        }
-        
-        [self.navigationController setToolbarHidden:NO animated:animated];
-    }
     
     [self.navigationController.navigationBar addSubview:self.progressView];
 }
@@ -127,17 +125,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
-    {
-        if (self.presentingViewController)
-        {
-            // Presenting modally
-            animated = NO;
-        }
-        
-        [self.navigationController setToolbarHidden:YES animated:animated];
-    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -154,7 +141,7 @@
     self.goBackButton.enabled = [self.webView canGoBack];
     self.goForwardButton.enabled = [self.webView canGoForward];
     
-    self.refreshButton = [self.webView isLoading] ? self.stopLoadButton : self.reloadButton;
+    self.refreshButton = [[UIApplication sharedApplication] isNetworkActivityIndicatorVisible] ? self.stopLoadButton : self.reloadButton;
     
     self.toolbarItems = @[self.goBackButton, self.flexibleSpaceButton, self.goForwardButton, self.flexibleSpaceButton, self.refreshButton, self.flexibleSpaceButton, self.shareButton];
 }
@@ -244,6 +231,11 @@
 
 - (void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
 {
+    if (!_performedInitialRequest)
+    {
+        return;
+    }
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         
         // Prevent the progress view from ever resetting back to a smaller progress value.
@@ -269,6 +261,11 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
+    if (!_performedInitialRequest)
+    {
+        return;
+    }
+    
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [self refreshToolbarItems];
 }
@@ -276,10 +273,18 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    if (!_performedInitialRequest)
+    {
+        _performedInitialRequest = YES;
+        [self.webView loadRequest:self.currentRequest];
+    }
+    
     self.navigationItem.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     self.currentRequest = self.webView.request;
     
     // Don't hide progress view here, as the webpage isn't necessarily visible yet
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
     [self refreshToolbarItems];
 }
