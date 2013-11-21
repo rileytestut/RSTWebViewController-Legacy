@@ -39,7 +39,7 @@ typedef NS_OPTIONS(NSInteger, RSTWebViewControllerSharingActivity) {
  *
  *  @param webViewController The RSTWebViewController to be dismissed
  */
-- (void)willDismissWebViewController:(RSTWebViewController *)webViewController;
+- (void)webViewControllerWillDismiss:(RSTWebViewController *)webViewController;
 
 @end
 
@@ -58,12 +58,11 @@ typedef NS_OPTIONS(NSInteger, RSTWebViewControllerSharingActivity) {
 // Called periodically during download to allow you to keep track of progress
 - (void)webViewController:(RSTWebViewController *)webViewController downloadTask:(NSURLSessionDownloadTask *)downloadTask totalBytesDownloaded:(int64_t)totalBytesDownloaded totalBytesExpected:(int64_t)totalBytesExpected;
 
-// Download finished. You MUST read or copy the file over to your local directory before this message returns, as iOS deletes it straight afterwards.
-// Due to Apple's implementation of NSURLSession, webViewController:didCompleteDownloadWithError: will still be called with a nil error.
+// Download successfully finished. You MUST read or copy the file over to your local directory before this message returns, as iOS deletes it straight afterwards.
 - (void)webViewController:(RSTWebViewController *)webViewController downloadTask:(NSURLSessionDownloadTask *)downloadTask didDownloadFileToURL:(NSURL *)fileURL;
 
-// Last method before the download task is truly finished. Error may be nil if no error occured.
-- (void)webViewController:(RSTWebViewController *)webViewController downloadTask:(NSURLSessionDownloadTask *)downloadTask didCompleteDownloadWithError:(NSError *)error;
+// Failed to download file.
+- (void)webViewController:(RSTWebViewController *)webViewController downloadTask:(NSURLSessionDownloadTask *)downloadTask didFailDownloadWithError:(NSError *)error;
 
 @end
 

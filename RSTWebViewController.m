@@ -14,7 +14,6 @@
 @property (strong, nonatomic) NSURLRequest *currentRequest;
 @property (strong, nonatomic) UIProgressView *progressView;
 @property (strong, nonatomic) NJKWebViewProgress *webViewProgress;
-@property (assign, nonatomic) BOOL loadingRequest; // Help prevent false positives
 
 @property (strong, nonatomic) UIBarButtonItem *goBackButton;
 @property (strong, nonatomic) UIBarButtonItem *goForwardButton;
@@ -23,7 +22,7 @@
 @property (strong, nonatomic) UIBarButtonItem *fixedSpaceButton;
 
 // Refreshing
-@property (assign, nonatomic) UIBarButtonItem *refreshButton; // Assigned either loadButton or stopLoadButton
+@property (assign, nonatomic) UIBarButtonItem *refreshButton; // Assigned to either reloadButton or stopLoadButton
 @property (strong, nonatomic) UIBarButtonItem *reloadButton;
 @property (strong, nonatomic) UIBarButtonItem *stopLoadButton;
 
@@ -50,7 +49,6 @@
     if (self)
     {
         _currentRequest = request;
-        _loadingRequest = YES;
         
         _webViewProgress = [[NJKWebViewProgress alloc] init];
         _webViewProgress.webViewProxyDelegate = self;
@@ -92,9 +90,9 @@
     
     self.goBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back Button"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
     self.goForwardButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Forward Button"] style:UIBarButtonItemStylePlain target:self action:@selector(goForward:)];
-    self.reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload:)];
+    self.reloadButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Refresh Button"] style:UIBarButtonItemStylePlain target:self action:@selector(reload:)];
     self.stopLoadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(stopLoading:)];
-    self.shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareLink:)];
+    self.shareButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Share Button"] style:UIBarButtonItemStylePlain target:self action:@selector(shareLink:)];
     self.flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     self.refreshButton = self.reloadButton;
@@ -155,9 +153,6 @@
 {
     self.goBackButton.enabled = [self.webView canGoBack];
     self.goForwardButton.enabled = [self.webView canGoForward];
-    
-    // The following line is purposefully commented out. Sometimes, longrunning javascript or other elements may take longer to load, but to the user it sometimes looks like the web view has stalled.
-    // We update these in didStartLoading and didFinishLoading to match the state of these buttons to the state of the progress indicator
     
     self.refreshButton = [self.webView isLoading] ? self.stopLoadButton : self.reloadButton;
     
@@ -249,36 +244,32 @@
 
 - (void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
 {
-    if (self.loadingRequest)
-    {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            // Prevent the progress view from ever resetting back to a smaller progress value.
-            // It's also common for the progress to be 1.0, and then start showing the actual progress. So this is the *only* exception to the don't-display-less-progress rule.
-            if ((progress > self.progressView.progress) || self.progressView.progress >= 1.0f)
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        // Prevent the progress view from ever resetting back to a smaller progress value.
+        // It's also common for the progress to be 1.0, and then start showing the actual progress. So this is the *only* exception to the don't-display-less-progress rule.
+        if ((progress > self.progressView.progress) || self.progressView.progress >= 1.0f)
+        {
+            if (self.progressView.alpha == 0.0)
             {
-                if (self.progressView.alpha == 0.0)
-                {
-                    [self didStartLoading];
-                }
-                
-                [self.progressView setProgress:progress animated:YES];
+                [self didStartLoading];
             }
             
-            if (progress >= 1.0)
-            {
-                [self didFinishLoading];
-            }
-        });
-    }
+            [self.progressView setProgress:progress animated:YES];
+        }
+        
+        if (progress >= 1.0)
+        {
+            [self didFinishLoading];
+        }
+    });
 }
 
 #pragma mark - UIWebViewController delegate
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-	// Called multiple times per loading of a large web page, so we do our start methods in webViewProgress:updateProgress:
-    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [self refreshToolbarItems];
 }
 
@@ -287,6 +278,7 @@
 {
     self.navigationItem.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     self.currentRequest = self.webView.request;
+    
     // Don't hide progress view here, as the webpage isn't necessarily visible yet
     
     [self refreshToolbarItems];
@@ -302,8 +294,6 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    self.loadingRequest = YES;
-    
     if ([self.downloadDelegate respondsToSelector:@selector(webViewController:shouldStartDownloadWithRequest:)])
     {
         if ([self.downloadDelegate webViewController:self shouldStartDownloadWithRequest:request])
@@ -317,21 +307,15 @@
 
 #pragma mark - Private
 
-
 - (void)didStartLoading
 {
     [self showProgressView];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
     [self refreshToolbarItems];
 }
 
 - (void)didFinishLoading
 {
-    self.loadingRequest = NO;
     [self hideProgressViewWithCompletion:NULL];
-    
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
     [self refreshToolbarItems];
     
@@ -395,9 +379,12 @@
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
-    if ([self.downloadDelegate respondsToSelector:@selector(webViewController:downloadTask:didCompleteDownloadWithError:)])
+    if (error)
     {
-        [self.downloadDelegate webViewController:self downloadTask:(NSURLSessionDownloadTask *)task didCompleteDownloadWithError:error];
+        if ([self.downloadDelegate respondsToSelector:@selector(webViewController:downloadTask:didFailDownloadWithError:)])
+        {
+            [self.downloadDelegate webViewController:self downloadTask:(NSURLSessionDownloadTask *)task didFailDownloadWithError:error];
+        }
     }
 }
 
@@ -410,9 +397,9 @@
 
 - (void)dismissWebViewController:(UIBarButtonItem *)barButtonItem
 {
-    if ([self.delegate respondsToSelector:@selector(willDismissWebViewController:)])
+    if ([self.delegate respondsToSelector:@selector(webViewControllerWillDismiss:)])
     {
-        [self.delegate willDismissWebViewController:self];
+        [self.delegate webViewControllerWillDismiss:self];
     }
     
     [self.presentingViewController dismissViewControllerAnimated:YES completion:NULL];
