@@ -14,6 +14,6 @@ Pod::Spec.new do |s|
   }
   s.source_files = '*.{h,m}'
   s.resources = '*.png'
-  s.dependency     'NJKWebViewProgress'
+  s.dependency     'NJKWebViewProgress', '~> 0.1.0'
   s.requires_arc = true
 end
