@@ -9,7 +9,38 @@
 #import "NJKWebViewProgress.h"
 #import "RSTSafariActivity.h"
 
+#import <objc/runtime.h>
+
+//////////////////
+
+// Category on NSObject so we can associate an NSProgress with a particular download task
+// It's a category on NSObject because internally, downloads are done via the __NSCFLocalDownloadTask class, which apparently isn't a subclass of NSURLSessionTask
+@interface NSObject (Progress)
+
+@property (strong, nonatomic) NSProgress *progress;
+
+@end
+
+@implementation NSObject (Progress)
+@dynamic progress;
+
+- (void)setProgress:(NSProgress *)progress
+{
+    objc_setAssociatedObject(self, @selector(progress), progress, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSProgress *)progress
+{
+    return objc_getAssociatedObject(self, @selector(progress));
+}
+
+@end
+
+//////////////////
+
 @interface RSTWebViewController () <UIWebViewDelegate, NJKWebViewProgressDelegate, NSURLSessionDownloadDelegate>
+
+@property (strong, nonatomic) UIWebView *webView;
 
 @property (strong, nonatomic) NSURLRequest *currentRequest;
 @property (strong, nonatomic) UIProgressView *progressView;
@@ -78,7 +109,7 @@
     self.webView.scalesPageToFit = YES;
     self.view = self.webView;
     
-    // iOS 7 bug: bar of black appears at bottom of web view until first page is loaded. This loads a white page, then we'll load the request
+    // iOS 7 bug: bar of black appears at bottom of web view until first page is loaded. To compensate, we load a white page, then load the request
     [self.webView loadHTMLString:@"<html><body bgcolor='#FFFFFF'></body></html>" baseURL:nil];
 }
 
@@ -88,9 +119,9 @@
 	// Do any additional setup after loading the view.
     
     self.progressView.frame = CGRectMake(0,
-                                     CGRectGetHeight(self.navigationController.navigationBar.bounds) - CGRectGetHeight(self.progressView.bounds),
-                                     CGRectGetWidth(self.navigationController.navigationBar.bounds),
-                                     CGRectGetHeight(self.progressView.bounds));
+                                         CGRectGetHeight(self.navigationController.navigationBar.bounds) - CGRectGetHeight(self.progressView.bounds),
+                                         CGRectGetWidth(self.navigationController.navigationBar.bounds),
+                                         CGRectGetHeight(self.progressView.bounds));
     
     self.goBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back Button"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
     self.goForwardButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Forward Button"] style:UIBarButtonItemStylePlain target:self action:@selector(goForward:)];
@@ -109,16 +140,22 @@
     
     [self refreshToolbarItems];
     
-    if (self.showDoneButton)
+    if (self.showsDoneButton)
     {
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissWebViewController:)];
         [self.navigationItem setRightBarButtonItem:doneButton];
     }
     
-    [UIView performWithoutAnimation:^{
+    if ([[self.navigationController viewControllers] count] > 1)
+    {
         [self.navigationController setToolbarHidden:NO animated:NO];
-    }];
-    
+    }
+    else
+    {
+        [UIView performWithoutAnimation:^{
+            [self.navigationController setToolbarHidden:NO animated:NO];
+        }];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -131,6 +168,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    [self.navigationController setToolbarHidden:YES animated:NO];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -184,7 +223,6 @@
     NSURL *url = [NSURL URLWithString:currentAddress];
     
     NSArray *applicationActivities = [self applicationActivities];
-   // NSArray *
     
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[url] applicationActivities:applicationActivities];
     activityViewController.excludedActivityTypes = [self excludedActivityTypes];
@@ -305,12 +343,9 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    if ([self.downloadDelegate respondsToSelector:@selector(webViewController:shouldStartDownloadWithRequest:)])
+    if ([self.downloadDelegate webViewController:self shouldInterceptDownloadRequest:request])
     {
-        if ([self.downloadDelegate webViewController:self shouldStartDownloadWithRequest:request])
-        {
-            [self startDownloadWithRequest:request];
-        }
+        [self startDownloadWithRequest:request];
     }
     
     return YES;
@@ -347,56 +382,48 @@
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
     
     NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithRequest:request];
-    downloadTask.uniqueTaskIdentifier = [[NSUUID UUID] UUIDString];
     
-    if ([self.downloadDelegate respondsToSelector:@selector(webViewController:willStartDownloadWithTask:startDownloadBlock:)])
-    {
-        [self.downloadDelegate webViewController:self willStartDownloadWithTask:downloadTask startDownloadBlock:^(BOOL shouldContinue)
-        {
-            if (shouldContinue)
-            {
-                [downloadTask resume];
-            }
-            else
-            {
-                [downloadTask cancel];
-            }
-        }];
-    }
-    else
-    {
-        [downloadTask resume];
-    }
-    
+    [self.downloadDelegate webViewController:self shouldStartDownloadTask:downloadTask startDownloadBlock:^(BOOL shouldContinue, NSProgress *progress)
+     {
+         if (shouldContinue)
+         {
+             [downloadTask setProgress:progress];
+             [downloadTask resume];
+         }
+         else
+         {
+             [downloadTask cancel];
+         }
+     }];
 }
 
 #pragma mark - NSURLSession delegate
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
 {
-    if ([self.downloadDelegate respondsToSelector:@selector(webViewController:downloadTask:totalBytesDownloaded:totalBytesExpected:)])
-    {
-        [self.downloadDelegate webViewController:self downloadTask:downloadTask totalBytesDownloaded:totalBytesWritten totalBytesExpected:totalBytesExpectedToWrite];
-    }
+    NSProgress *progress = downloadTask.progress;
+    
+    progress.totalUnitCount = totalBytesExpectedToWrite;
+    progress.completedUnitCount = totalBytesWritten;
 }
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location
 {
-    if ([self.downloadDelegate respondsToSelector:@selector(webViewController:downloadTask:didDownloadFileToURL:)])
-    {
-        [self.downloadDelegate webViewController:self downloadTask:downloadTask didDownloadFileToURL:location];
-    }
+    [self.downloadDelegate webViewController:self didCompleteDownloadTask:downloadTask destinationURL:location error:nil];
+    
+    NSProgress *progress = downloadTask.progress;
+    progress.completedUnitCount = progress.totalUnitCount;
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
     if (error)
     {
-        if ([self.downloadDelegate respondsToSelector:@selector(webViewController:downloadTask:didFailDownloadWithError:)])
-        {
-            [self.downloadDelegate webViewController:self downloadTask:(NSURLSessionDownloadTask *)task didFailDownloadWithError:error];
-        }
+        [self.downloadDelegate webViewController:self didCompleteDownloadTask:(NSURLSessionDownloadTask *)task destinationURL:nil error:error];
     }
+    
+    NSProgress *progress = task.progress;
+    progress.completedUnitCount = progress.totalUnitCount;
 }
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didResumeAtOffset:(int64_t)fileOffset expectedTotalBytes:(int64_t)expectedTotalBytes

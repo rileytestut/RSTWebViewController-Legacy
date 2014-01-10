@@ -7,9 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "NSURLSessionTask+UniqueTaskIdentifier.h"
-
-typedef void(^RSTWebViewControllerStartDownloadBlock)(BOOL shouldContinue);
+typedef void(^RSTWebViewControllerStartDownloadBlock)(BOOL shouldContinue, NSProgress *progress);
 
 typedef NS_OPTIONS(NSInteger, RSTWebViewControllerSharingActivity) {
     RSTWebViewControllerSharingActivityNone = 0,
@@ -45,24 +43,15 @@ typedef NS_OPTIONS(NSInteger, RSTWebViewControllerSharingActivity) {
 
 @protocol RSTWebViewControllerDownloadDelegate <NSObject>
 
-@optional
+// Return YES to indicate you want to intercept the request and possibly perform a download
+- (BOOL)webViewController:(RSTWebViewController *)webViewController shouldInterceptDownloadRequest:(NSURLRequest *)request;
 
-// Return YES to tell RSTWebViewController to create a NSURLSession object and start a NSURLSessionDownloadTask.
-// Or, if you choose to, you can return NO, and then implement your own downloading logic via NSURLSession with the NSURLRequest
-- (BOOL)webViewController:(RSTWebViewController *)webViewController shouldStartDownloadWithRequest:(NSURLRequest *)request;
+// Call startDownloadBlock once you or the user has decided whether to download a file. Pass in YES as the first argument to continue with the download, or NO to cancel it.
+// Optionally, pass in an NSProgress object to be used to track progress of the download.
+- (void)webViewController:(RSTWebViewController *)webViewController shouldStartDownloadTask:(NSURLSessionDownloadTask *)downloadTask startDownloadBlock:(RSTWebViewControllerStartDownloadBlock)startDownloadBlock;
 
-// If implemented, you must call startDownloadBlock, or else the download will never start. This was you can display an alert to the user asking if they want to download the file.
-// If needed, you can keep a reference to the NSURLSessionDownloadTask to suspend/cancel during the download. You can access the original request via downloadTask.originalRequest, or the current one via downloadTask.currentRequest
-- (void)webViewController:(RSTWebViewController *)webViewController willStartDownloadWithTask:(NSURLSessionDownloadTask *)downloadTask startDownloadBlock:(RSTWebViewControllerStartDownloadBlock)completionHandler;
-
-// Called periodically during download to allow you to keep track of progress
-- (void)webViewController:(RSTWebViewController *)webViewController downloadTask:(NSURLSessionDownloadTask *)downloadTask totalBytesDownloaded:(int64_t)totalBytesDownloaded totalBytesExpected:(int64_t)totalBytesExpected;
-
-// Download successfully finished. You MUST read or copy the file over to your local directory before this message returns, as iOS deletes it straight afterwards.
-- (void)webViewController:(RSTWebViewController *)webViewController downloadTask:(NSURLSessionDownloadTask *)downloadTask didDownloadFileToURL:(NSURL *)fileURL;
-
-// Failed to download file.
-- (void)webViewController:(RSTWebViewController *)webViewController downloadTask:(NSURLSessionDownloadTask *)downloadTask didFailDownloadWithError:(NSError *)error;
+// Called once download has completed. You must move the file from the destinationURL by the time the method returns if you want to keep onto it, since iOS will delete it soon after.
+- (void)webViewController:(RSTWebViewController *)webViewController didCompleteDownloadTask:(NSURLSessionDownloadTask *)downloadTask destinationURL:(NSURL *)url error:(NSError *)error;
 
 @end
 
@@ -79,7 +68,7 @@ typedef NS_OPTIONS(NSInteger, RSTWebViewControllerSharingActivity) {
 @property (weak, nonatomic) id <RSTWebViewControllerDownloadDelegate> downloadDelegate;
 
 // UIWebView used to display webpages
-@property (strong, nonatomic) UIWebView *webView;
+@property (readonly, strong, nonatomic) UIWebView *webView;
 
 // Included UIActivities to be displayed when sharing a link. Default is RSTWebViewControllerSharingActivityAll
 @property (assign, nonatomic) RSTWebViewControllerSharingActivity supportedSharingActivities;
@@ -88,7 +77,7 @@ typedef NS_OPTIONS(NSInteger, RSTWebViewControllerSharingActivity) {
 @property (copy, nonatomic) NSArray /* UIActivity */ *additionalSharingActivities;
 
 // Set to YES when presenting modally to show a Done button that'll dismiss itself. Must be set before presentation.
-@property (assign, nonatomic) BOOL showDoneButton;
+@property (assign, nonatomic) BOOL showsDoneButton;
 
 - (instancetype)initWithAddress:(NSString *)address;
 - (instancetype)initWithURL:(NSURL *)url;
