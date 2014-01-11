@@ -7,17 +7,10 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^RSTWebViewControllerStartDownloadBlock)(BOOL shouldContinue, NSProgress *progress);
+#import "RSTSafariActivity.h"
+#import "RSTChromeActivity.h"
 
-typedef NS_OPTIONS(NSInteger, RSTWebViewControllerSharingActivity) {
-    RSTWebViewControllerSharingActivityNone = 0,
-    RSTWebViewControllerSharingActivitySafari = 1 << 0,
-    RSTWebViewControllerSharingActivityChrome = 1 << 1,
-    RSTWebViewControllerSharingActivityMail = 1 << 2,
-    RSTWebViewControllerSharingActivityCopy = 1 << 3,
-    RSTWebViewControllerSharingActivityMessage = 1 << 4,
-    RSTWebViewControllerSharingActivityAll = 2,
-};
+typedef void(^RSTWebViewControllerStartDownloadBlock)(BOOL shouldContinue, NSProgress *progress);
 
 @class RSTWebViewController;
 
@@ -70,8 +63,8 @@ typedef NS_OPTIONS(NSInteger, RSTWebViewControllerSharingActivity) {
 // UIWebView used to display webpages
 @property (readonly, strong, nonatomic) UIWebView *webView;
 
-// Included UIActivities to be displayed when sharing a link. Default is RSTWebViewControllerSharingActivityAll
-@property (assign, nonatomic) RSTWebViewControllerSharingActivity supportedSharingActivities;
+// UIActivity activity types that shouldn't be displayed when sharing a link
+@property (copy, nonatomic) NSArray /* NSString */ *excludedActivityTypes;
 
 // Additional UIActivities to be displayed when sharing a link
 @property (copy, nonatomic) NSArray /* UIActivity */ *additionalSharingActivities;

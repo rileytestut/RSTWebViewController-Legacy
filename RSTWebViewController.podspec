@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
     :git => 'https://github.com/rileytestut/RSTWebViewController.git',
     :tag => s.version.to_s
   }
-  s.source_files = '*.{h,m}'
-  s.resources = '*.png'
+  s.source_files = 'RSTWebViewController/**/*.{h,m}'
+  s.resources = 'RSTWebViewController/**/*.png'
   s.dependency     'NJKWebViewProgress', '~> 0.1.0'
   s.requires_arc = true
 end

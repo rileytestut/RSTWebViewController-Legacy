@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
+UIKIT_EXTERN NSString *const RSTActivityTypeSafari;
+
 @interface RSTSafariActivity : UIActivity
 
 @end

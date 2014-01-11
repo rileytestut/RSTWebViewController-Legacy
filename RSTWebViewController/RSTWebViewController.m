@@ -38,7 +38,7 @@
 
 //////////////////
 
-@interface RSTWebViewController () <UIWebViewDelegate, NJKWebViewProgressDelegate, NSURLSessionDownloadDelegate>
+@interface RSTWebViewController () <UIWebViewDelegate, NJKWebViewProgressDelegate, NSURLSessionDownloadDelegate, UIPopoverControllerDelegate>
 
 @property (strong, nonatomic) UIWebView *webView;
 
@@ -46,11 +46,19 @@
 @property (strong, nonatomic) UIProgressView *progressView;
 @property (strong, nonatomic) NJKWebViewProgress *webViewProgress;
 
+@property (strong, nonatomic) UIView *snapshotView;
+@property (strong, nonatomic) UIScreenEdgePanGestureRecognizer *screenEdgePanGestureRecognizer;
+
+@property (assign, nonatomic) BOOL showsPageLoadingProgress;
+
+@property (strong, nonatomic) UIBarButtonItem *doneButton;
 @property (strong, nonatomic) UIBarButtonItem *goBackButton;
 @property (strong, nonatomic) UIBarButtonItem *goForwardButton;
 @property (strong, nonatomic) UIBarButtonItem *shareButton;
 @property (strong, nonatomic) UIBarButtonItem *flexibleSpaceButton;
 @property (strong, nonatomic) UIBarButtonItem *fixedSpaceButton;
+
+@property (strong, nonatomic) UIPopoverController *sharingPopoverController;
 
 // Refreshing
 @property (assign, nonatomic) UIBarButtonItem *refreshButton; // Assigned to either reloadButton or stopLoadButton
@@ -93,6 +101,8 @@
         _progressView.trackTintColor = [UIColor clearColor];
         _progressView.alpha = 0.0;
         _progressView.progress = 0.0;
+        
+        _showsPageLoadingProgress = YES;
     }
     
     return self;
@@ -131,31 +141,43 @@
     self.flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     self.fixedSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     
+    self.screenEdgePanGestureRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanFromScreenEdge:)];
+    self.screenEdgePanGestureRecognizer.edges = UIRectEdgeLeft;
+    [self.webView addGestureRecognizer:self.screenEdgePanGestureRecognizer];
+    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-        self.fixedSpaceButton.width = 35.0f;
+        self.fixedSpaceButton.width = 20.0f;
     }
     
     self.refreshButton = self.reloadButton;
     
-    [self refreshToolbarItems];
-    
     if (self.showsDoneButton)
     {
-        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissWebViewController:)];
-        [self.navigationItem setRightBarButtonItem:doneButton];
+        self.doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissWebViewController:)];
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+        {
+            [self.navigationItem setRightBarButtonItem:self.doneButton];
+        }
     }
     
-    if ([[self.navigationController viewControllers] count] > 1)
+    [self refreshToolbarItems];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
-        [self.navigationController setToolbarHidden:NO animated:NO];
-    }
-    else
-    {
-        [UIView performWithoutAnimation:^{
+        if ([[self.navigationController viewControllers] firstObject] != self)
+        {
             [self.navigationController setToolbarHidden:NO animated:NO];
-        }];
+        }
+        else
+        {
+            [UIView performWithoutAnimation:^{
+                [self.navigationController setToolbarHidden:NO animated:NO];
+            }];
+        }
     }
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -169,7 +191,10 @@
 {
     [super viewWillDisappear:animated];
     
-    [self.navigationController setToolbarHidden:YES animated:NO];
+    if ([[self.navigationController viewControllers] firstObject] != self)
+    {
+        [self.navigationController setToolbarHidden:YES animated:NO];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -188,7 +213,23 @@
     
     self.refreshButton = [[UIApplication sharedApplication] isNetworkActivityIndicatorVisible] ? self.stopLoadButton : self.reloadButton;
     
-    self.toolbarItems = @[self.fixedSpaceButton, self.goBackButton, self.flexibleSpaceButton, self.goForwardButton, self.flexibleSpaceButton, self.refreshButton, self.flexibleSpaceButton, self.shareButton, self.fixedSpaceButton];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        self.toolbarItems = @[self.fixedSpaceButton, self.goBackButton, self.flexibleSpaceButton, self.goForwardButton, self.flexibleSpaceButton, self.refreshButton, self.flexibleSpaceButton, self.shareButton, self.fixedSpaceButton];
+    }
+    else
+    {
+        NSMutableArray *buttons = [@[self.shareButton, self.fixedSpaceButton, self.refreshButton, self.fixedSpaceButton, self.goForwardButton, self.fixedSpaceButton, self.goBackButton] mutableCopy];
+        
+        if (self.showsDoneButton)
+        {
+            [buttons insertObject:self.doneButton atIndex:0];
+            [buttons insertObject:self.fixedSpaceButton atIndex:1];
+        }
+        
+        self.navigationItem.rightBarButtonItems = buttons;
+    }
+    
 }
 
 #pragma mark - Navigation
@@ -201,6 +242,25 @@
 - (void)goForward:(UIBarButtonItem *)sender
 {
     [self.webView goForward];
+}
+
+- (void)didPanFromScreenEdge:(UIScreenEdgePanGestureRecognizer *)screenEdgePanGestureRecognizer
+{
+    if (self.snapshotView == nil)
+    {
+        self.showsPageLoadingProgress = NO;
+        
+        self.snapshotView = [self.webView snapshotViewAfterScreenUpdates:YES];
+        [self.view addSubview:self.snapshotView];
+        
+        [self goBack:self.goBackButton];
+    }
+    
+    self.snapshotView.frame = ({
+        CGRect frame = self.snapshotView.frame;
+        frame.origin.x = [screenEdgePanGestureRecognizer locationInView:self.webView].x;
+        frame;
+    });
 }
 
 #pragma mark - Refreshing
@@ -219,40 +279,48 @@
 
 - (void)shareLink:(UIBarButtonItem *)barButtonItem
 {
+    if (self.sharingPopoverController)
+    {
+        [self.sharingPopoverController dismissPopoverAnimated:YES];
+        self.sharingPopoverController = nil;
+    }
+    
     NSString *currentAddress = [self.webView stringByEvaluatingJavaScriptFromString:@"window.location.href"];
     NSURL *url = [NSURL URLWithString:currentAddress];
     
-    NSArray *applicationActivities = [self applicationActivities];
+    NSArray *applicationActivities = @[[RSTSafariActivity new], [RSTChromeActivity new]];
     
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[url] applicationActivities:applicationActivities];
     activityViewController.excludedActivityTypes = [self excludedActivityTypes];
-    [self presentViewController:activityViewController animated:YES completion:NULL];
-}
-
-- (NSArray *)applicationActivities
-{
-    BOOL useAllActivities = (self.supportedSharingActivities & RSTWebViewControllerSharingActivityAll) == RSTWebViewControllerSharingActivityAll;
     
-    NSMutableArray *applicationActivities = [NSMutableArray array];
-    
-    if (((self.supportedSharingActivities & RSTWebViewControllerSharingActivitySafari) == RSTWebViewControllerSharingActivitySafari) || useAllActivities)
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
-        RSTSafariActivity *activity = [[RSTSafariActivity alloc] init];
-        [applicationActivities addObject:activity];
+        [self presentViewController:activityViewController animated:YES completion:NULL];
     }
-    
-    return applicationActivities;
+    else
+    {
+        self.sharingPopoverController = [[UIPopoverController alloc] initWithContentViewController:activityViewController];
+        self.sharingPopoverController.delegate = self;
+        [self.sharingPopoverController presentPopoverFromBarButtonItem:barButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    }
 }
 
-- (NSArray *)excludedActivityTypes
+#pragma mark - UIPopoverControllerDelegate
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
 {
-    return nil;
+    self.sharingPopoverController = nil;
 }
 
 #pragma mark - Progress View
 
 - (void)showProgressView
 {
+    if (!self.showsPageLoadingProgress)
+    {
+        return;
+    }
+    
     [UIView animateWithDuration:0.4 animations:^{
         self.progressView.alpha = 1.0;
     }];
@@ -435,6 +503,9 @@
 
 - (void)dismissWebViewController:(UIBarButtonItem *)barButtonItem
 {
+    [self.sharingPopoverController dismissPopoverAnimated:YES];
+    self.sharingPopoverController = nil;
+    
     if ([self.delegate respondsToSelector:@selector(webViewControllerWillDismiss:)])
     {
         [self.delegate webViewControllerWillDismiss:self];

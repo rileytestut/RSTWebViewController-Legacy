@@ -1,35 +1,37 @@
 //
 //  RSTSafariActivity.m
 //
-//  Created by Riley Testut on 9/11/13.
+//  Created by Riley Testut on 1/11/14.
 //  Copyright (c) 2013 Riley Testut. All rights reserved.
 //
 
-#import "RSTSafariActivity.h"
+#import "RSTChromeActivity.h"
 
-@interface RSTSafariActivity ()
+NSString *const RSTActivityTypeChrome = @"RSTActivityTypeChrome";
+
+@interface RSTChromeActivity ()
 
 @property (copy, nonatomic) NSURL *url;
 
 @end
 
-@implementation RSTSafariActivity
+@implementation RSTChromeActivity
 
 #pragma mark - UIActivity subclass
 
 - (NSString *)activityType
 {
-    return NSStringFromClass([self class]);
+    return RSTActivityTypeChrome;
 }
 
 - (NSString *)activityTitle
 {
-    return NSLocalizedString(@"Safari", @"");
+    return NSLocalizedString(@"Chrome", @"");
 }
 
 - (UIImage *)activityImage
 {
-    return [UIImage imageNamed:@"safari"];
+    return [UIImage imageNamed:@"Chrome_Activity"];
 }
 
 
@@ -56,35 +58,45 @@
 
 - (void)performActivity
 {
-    BOOL finished = [[UIApplication sharedApplication] openURL:self.url];
+    NSURLComponents *components = [NSURLComponents componentsWithURL:self.url resolvingAgainstBaseURL:nil];
+    
+    if ([components.scheme.lowercaseString isEqualToString:@"https"])
+    {
+        components.scheme = @"googlechromes";
+    }
+    else
+    {
+        components.scheme = @"googlechrome";
+    }
+    
+    BOOL finished = [[UIApplication sharedApplication] openURL:components.URL];
     
     [self activityDidFinish:finished];
 }
 
 + (UIActivityCategory)activityCategory
 {
-    return UIActivityCategoryShare;
+    return UIActivityCategoryAction;
 }
 
 #pragma mark - Helper Methods
 
 - (id)firstValidActivityItemForActivityItems:(NSArray *)activityItems
 {
+    if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"googlechrome://"]])
+    {
+        return nil;
+    }
+    
     for (id activityItem in activityItems)
     {
         if ([activityItem isKindOfClass:[NSString class]])
         {
-            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:activityItem]])
-            {
-                return activityItem;
-            }
+            return activityItem;
         }
         else if ([activityItem isKindOfClass:[NSURL class]])
         {
-            if ([[UIApplication sharedApplication] canOpenURL:activityItem])
-            {
-                return activityItem;
-            }
+            return activityItem;
         }
     }
     
@@ -92,3 +104,4 @@
 }
 
 @end
+
