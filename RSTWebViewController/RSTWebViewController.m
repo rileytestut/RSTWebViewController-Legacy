@@ -133,8 +133,8 @@
                                          CGRectGetWidth(self.navigationController.navigationBar.bounds),
                                          CGRectGetHeight(self.progressView.bounds));
     
-    self.goBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back Button"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
-    self.goForwardButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Forward Button"] style:UIBarButtonItemStylePlain target:self action:@selector(goForward:)];
+    self.goBackButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back_button"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
+    self.goForwardButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"forward_button"] style:UIBarButtonItemStylePlain target:self action:@selector(goForward:)];
     self.reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload:)];
     self.stopLoadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(stopLoading:)];
     self.shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareLink:)];
@@ -143,7 +143,7 @@
     
     self.screenEdgePanGestureRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(didPanFromScreenEdge:)];
     self.screenEdgePanGestureRecognizer.edges = UIRectEdgeLeft;
-    [self.webView addGestureRecognizer:self.screenEdgePanGestureRecognizer];
+    //[self.webView addGestureRecognizer:self.screenEdgePanGestureRecognizer];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
@@ -283,6 +283,8 @@
     {
         [self.sharingPopoverController dismissPopoverAnimated:YES];
         self.sharingPopoverController = nil;
+        
+        return;
     }
     
     NSString *currentAddress = [self.webView stringByEvaluatingJavaScriptFromString:@"window.location.href"];

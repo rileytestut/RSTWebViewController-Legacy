@@ -31,7 +31,7 @@ NSString *const RSTActivityTypeSafari = @"RSTActivityTypeSafari";
 
 - (UIImage *)activityImage
 {
-    return [UIImage imageNamed:@"Safari_Activity"];
+    return [UIImage imageNamed:@"safari_activity"];
 }
 
 

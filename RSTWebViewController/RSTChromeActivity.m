@@ -31,7 +31,7 @@ NSString *const RSTActivityTypeChrome = @"RSTActivityTypeChrome";
 
 - (UIImage *)activityImage
 {
-    return [UIImage imageNamed:@"Chrome_Activity"];
+    return [UIImage imageNamed:@"chrome_activity"];
 }
 
 
@@ -58,7 +58,7 @@ NSString *const RSTActivityTypeChrome = @"RSTActivityTypeChrome";
 
 - (void)performActivity
 {
-    NSURLComponents *components = [NSURLComponents componentsWithURL:self.url resolvingAgainstBaseURL:nil];
+    NSURLComponents *components = [NSURLComponents componentsWithURL:self.url resolvingAgainstBaseURL:NO];
     
     if ([components.scheme.lowercaseString isEqualToString:@"https"])
     {
