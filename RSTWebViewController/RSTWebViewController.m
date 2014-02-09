@@ -17,21 +17,22 @@
 // It's a category on NSObject because internally, downloads are done via the __NSCFLocalDownloadTask class, which apparently isn't a subclass of NSURLSessionTask
 @interface NSObject (Progress)
 
-@property (strong, nonatomic) NSProgress *progress;
+// don't name it 'progress', conflicts with private API and (albeit rarely) crashes
+@property (strong, nonatomic) NSProgress *downloadProgress;
 
 @end
 
 @implementation NSObject (Progress)
-@dynamic progress;
+@dynamic downloadProgress;
 
-- (void)setProgress:(NSProgress *)progress
+- (void)setDownloadProgress:(NSProgress *)downloadProgress
 {
-    objc_setAssociatedObject(self, @selector(progress), progress, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(downloadProgress), downloadProgress, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSProgress *)progress
+- (NSProgress *)downloadProgress
 {
-    return objc_getAssociatedObject(self, @selector(progress));
+    return objc_getAssociatedObject(self, @selector(downloadProgress));
 }
 
 @end
@@ -457,7 +458,7 @@
      {
          if (shouldContinue)
          {
-             [downloadTask setProgress:progress];
+             [downloadTask setDownloadProgress:progress];
              [downloadTask resume];
          }
          else
@@ -471,7 +472,7 @@
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
 {
-    NSProgress *progress = downloadTask.progress;
+    NSProgress *progress = downloadTask.downloadProgress;
     
     progress.totalUnitCount = totalBytesExpectedToWrite;
     progress.completedUnitCount = totalBytesWritten;
@@ -481,7 +482,7 @@
 {
     [self.downloadDelegate webViewController:self didCompleteDownloadTask:downloadTask destinationURL:location error:nil];
     
-    NSProgress *progress = downloadTask.progress;
+    NSProgress *progress = downloadTask.downloadProgress;
     progress.completedUnitCount = progress.totalUnitCount;
 }
 
@@ -492,7 +493,7 @@
         [self.downloadDelegate webViewController:self didCompleteDownloadTask:(NSURLSessionDownloadTask *)task destinationURL:nil error:error];
     }
     
-    NSProgress *progress = task.progress;
+    NSProgress *progress = task.downloadProgress;
     progress.completedUnitCount = progress.totalUnitCount;
 }
 
