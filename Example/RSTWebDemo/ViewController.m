@@ -31,7 +31,6 @@
 
 - (IBAction)presentWebViewController:(id)sender {
     RSTWebViewController *webViewController = [[RSTWebViewController alloc] initWithAddress:@"http://rileytestut.com"];
-    webViewController.supportedSharingActivities = RSTWebViewControllerSharingActivitySafari;
     [self.navigationController pushViewController:webViewController animated:YES];
 }
 

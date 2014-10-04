@@ -7,43 +7,45 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CC29A0D717E21755005AF95E /* safari@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC29A0D617E21755005AF95E /* safari@2x.png */; };
+		BFDC0F0919DFB6C000EC23AE /* RSTWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDC0F0819DFB6BF00EC23AE /* RSTWebViewController.m */; };
+		BFDC0F0E19DFB6C800EC23AE /* back_button.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDC0F0A19DFB6C800EC23AE /* back_button.png */; };
+		BFDC0F0F19DFB6C800EC23AE /* back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDC0F0B19DFB6C800EC23AE /* back_button@2x.png */; };
+		BFDC0F1019DFB6C800EC23AE /* forward_button.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDC0F0C19DFB6C800EC23AE /* forward_button.png */; };
+		BFDC0F1119DFB6C800EC23AE /* forward_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDC0F0D19DFB6C800EC23AE /* forward_button@2x.png */; };
+		BFDC0F1619DFB6D000EC23AE /* chrome_activity.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDC0F1219DFB6D000EC23AE /* chrome_activity.png */; };
+		BFDC0F1719DFB6D000EC23AE /* chrome_activity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDC0F1319DFB6D000EC23AE /* chrome_activity@2x.png */; };
+		BFDC0F1819DFB6D000EC23AE /* safari_activity.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDC0F1419DFB6D000EC23AE /* safari_activity.png */; };
+		BFDC0F1919DFB6D000EC23AE /* safari_activity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDC0F1519DFB6D000EC23AE /* safari_activity@2x.png */; };
+		BFDC0F1E19DFB6D500EC23AE /* RSTChromeActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDC0F1B19DFB6D500EC23AE /* RSTChromeActivity.m */; };
+		BFDC0F1F19DFB6D500EC23AE /* RSTSafariActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDC0F1D19DFB6D500EC23AE /* RSTSafariActivity.m */; };
 		CC4E11A91794AD5500C539A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4E11A81794AD5500C539A5 /* Foundation.framework */; };
 		CC4E11AB1794AD5500C539A5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4E11AA1794AD5500C539A5 /* CoreGraphics.framework */; };
 		CC4E11AD1794AD5500C539A5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4E11AC1794AD5500C539A5 /* UIKit.framework */; };
 		CC4E11B31794AD5500C539A5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CC4E11B11794AD5500C539A5 /* InfoPlist.strings */; };
 		CC4E11B51794AD5500C539A5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CC4E11B41794AD5500C539A5 /* main.m */; };
 		CC4E11B91794AD5500C539A5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CC4E11B81794AD5500C539A5 /* AppDelegate.m */; };
-		CC4E11BC1794AD5500C539A5 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC4E11BA1794AD5500C539A5 /* Main_iPhone.storyboard */; };
-		CC4E11BF1794AD5500C539A5 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC4E11BD1794AD5500C539A5 /* Main_iPad.storyboard */; };
+		CC4E11BC1794AD5500C539A5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC4E11BA1794AD5500C539A5 /* Main.storyboard */; };
 		CC4E11C21794AD5500C539A5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CC4E11C11794AD5500C539A5 /* ViewController.m */; };
 		CC4E11C41794AD5500C539A5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC4E11C31794AD5500C539A5 /* Images.xcassets */; };
-		CC4E11CB1794AD5500C539A5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4E11CA1794AD5500C539A5 /* XCTest.framework */; };
-		CC4E11CC1794AD5500C539A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4E11A81794AD5500C539A5 /* Foundation.framework */; };
-		CC4E11CD1794AD5500C539A5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC4E11AC1794AD5500C539A5 /* UIKit.framework */; };
-		CC4E11D51794AD5500C539A5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CC4E11D31794AD5500C539A5 /* InfoPlist.strings */; };
-		CC4E11D71794AD5500C539A5 /* RSTWebDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CC4E11D61794AD5500C539A5 /* RSTWebDemoTests.m */; };
-		CCD9FAA917A119DF000B5750 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCD9FAA417A119DF000B5750 /* Media.xcassets */; };
-		CCD9FAAA17A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD9FAA617A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m */; };
-		CCD9FAAB17A119DF000B5750 /* RSTWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD9FAA817A119DF000B5750 /* RSTWebViewController.m */; };
-		CCF624A517F15B62003B0FF1 /* RSTSafariActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = CCF624A417F15B62003B0FF1 /* RSTSafariActivity.m */; };
-		CCF624AB17F15BAA003B0FF1 /* RSTWebViewControllerProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = CCF624AA17F15BAA003B0FF1 /* RSTWebViewControllerProtocol.m */; };
 		E89C8B74C54140A1BBA16173 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F9AA4DE17604AB396324FB8 /* libPods.a */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		CC4E11CE1794AD5500C539A5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CC4E119D1794AD5500C539A5 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CC4E11A41794AD5500C539A5;
-			remoteInfo = RSTWebDemo;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		8F9AA4DE17604AB396324FB8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		CC29A0D617E21755005AF95E /* safari@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "safari@2x.png"; sourceTree = "<group>"; };
+		BFDC0F0719DFB6BF00EC23AE /* RSTWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSTWebViewController.h; path = ../../RSTWebViewController/RSTWebViewController.h; sourceTree = "<group>"; };
+		BFDC0F0819DFB6BF00EC23AE /* RSTWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTWebViewController.m; path = ../../RSTWebViewController/RSTWebViewController.m; sourceTree = "<group>"; };
+		BFDC0F0A19DFB6C800EC23AE /* back_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back_button.png; path = ../../RSTWebViewController/back_button.png; sourceTree = "<group>"; };
+		BFDC0F0B19DFB6C800EC23AE /* back_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back_button@2x.png"; path = "../../RSTWebViewController/back_button@2x.png"; sourceTree = "<group>"; };
+		BFDC0F0C19DFB6C800EC23AE /* forward_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forward_button.png; path = ../../RSTWebViewController/forward_button.png; sourceTree = "<group>"; };
+		BFDC0F0D19DFB6C800EC23AE /* forward_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "forward_button@2x.png"; path = "../../RSTWebViewController/forward_button@2x.png"; sourceTree = "<group>"; };
+		BFDC0F1219DFB6D000EC23AE /* chrome_activity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chrome_activity.png; path = ../../RSTWebViewController/UIActivities/chrome_activity.png; sourceTree = "<group>"; };
+		BFDC0F1319DFB6D000EC23AE /* chrome_activity@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chrome_activity@2x.png"; path = "../../RSTWebViewController/UIActivities/chrome_activity@2x.png"; sourceTree = "<group>"; };
+		BFDC0F1419DFB6D000EC23AE /* safari_activity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = safari_activity.png; path = ../../RSTWebViewController/UIActivities/safari_activity.png; sourceTree = "<group>"; };
+		BFDC0F1519DFB6D000EC23AE /* safari_activity@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "safari_activity@2x.png"; path = "../../RSTWebViewController/UIActivities/safari_activity@2x.png"; sourceTree = "<group>"; };
+		BFDC0F1A19DFB6D500EC23AE /* RSTChromeActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSTChromeActivity.h; path = ../../RSTWebViewController/UIActivities/RSTChromeActivity.h; sourceTree = "<group>"; };
+		BFDC0F1B19DFB6D500EC23AE /* RSTChromeActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTChromeActivity.m; path = ../../RSTWebViewController/UIActivities/RSTChromeActivity.m; sourceTree = "<group>"; };
+		BFDC0F1C19DFB6D500EC23AE /* RSTSafariActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSTSafariActivity.h; path = ../../RSTWebViewController/UIActivities/RSTSafariActivity.h; sourceTree = "<group>"; };
+		BFDC0F1D19DFB6D500EC23AE /* RSTSafariActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTSafariActivity.m; path = ../../RSTWebViewController/UIActivities/RSTSafariActivity.m; sourceTree = "<group>"; };
 		CC4E11A51794AD5500C539A5 /* RSTWebDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSTWebDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC4E11A81794AD5500C539A5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CC4E11AA1794AD5500C539A5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -54,25 +56,11 @@
 		CC4E11B61794AD5500C539A5 /* RSTWebDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RSTWebDemo-Prefix.pch"; sourceTree = "<group>"; };
 		CC4E11B71794AD5500C539A5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CC4E11B81794AD5500C539A5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		CC4E11BB1794AD5500C539A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		CC4E11BE1794AD5500C539A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		CC4E11BB1794AD5500C539A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CC4E11C01794AD5500C539A5 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		CC4E11C11794AD5500C539A5 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		CC4E11C31794AD5500C539A5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		CC4E11C91794AD5500C539A5 /* RSTWebDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSTWebDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC4E11CA1794AD5500C539A5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		CC4E11D21794AD5500C539A5 /* RSTWebDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RSTWebDemoTests-Info.plist"; sourceTree = "<group>"; };
-		CC4E11D41794AD5500C539A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		CC4E11D61794AD5500C539A5 /* RSTWebDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSTWebDemoTests.m; sourceTree = "<group>"; };
-		CCD9FAA417A119DF000B5750 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = ../../Media.xcassets; sourceTree = "<group>"; };
-		CCD9FAA517A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURLSessionTask+UniqueTaskIdentifier.h"; path = "../../NSURLSessionTask+UniqueTaskIdentifier.h"; sourceTree = "<group>"; };
-		CCD9FAA617A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURLSessionTask+UniqueTaskIdentifier.m"; path = "../../NSURLSessionTask+UniqueTaskIdentifier.m"; sourceTree = "<group>"; };
-		CCD9FAA717A119DF000B5750 /* RSTWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSTWebViewController.h; path = ../../RSTWebViewController.h; sourceTree = "<group>"; };
-		CCD9FAA817A119DF000B5750 /* RSTWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTWebViewController.m; path = ../../RSTWebViewController.m; sourceTree = "<group>"; };
-		CCF624A317F15B62003B0FF1 /* RSTSafariActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSTSafariActivity.h; path = ../../RSTSafariActivity.h; sourceTree = "<group>"; };
-		CCF624A417F15B62003B0FF1 /* RSTSafariActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTSafariActivity.m; path = ../../RSTSafariActivity.m; sourceTree = "<group>"; };
-		CCF624A917F15BAA003B0FF1 /* RSTWebViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSTWebViewControllerProtocol.h; path = ../../RSTWebViewControllerProtocol.h; sourceTree = "<group>"; };
-		CCF624AA17F15BAA003B0FF1 /* RSTWebViewControllerProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSTWebViewControllerProtocol.m; path = ../../RSTWebViewControllerProtocol.m; sourceTree = "<group>"; };
 		F8D77DA3202246F187702A1A /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -88,24 +76,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CC4E11C61794AD5500C539A5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CC4E11CB1794AD5500C539A5 /* XCTest.framework in Frameworks */,
-				CC4E11CD1794AD5500C539A5 /* UIKit.framework in Frameworks */,
-				CC4E11CC1794AD5500C539A5 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BFDC0F2019DFB6DA00EC23AE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BFDC0F0A19DFB6C800EC23AE /* back_button.png */,
+				BFDC0F0B19DFB6C800EC23AE /* back_button@2x.png */,
+				BFDC0F0C19DFB6C800EC23AE /* forward_button.png */,
+				BFDC0F0D19DFB6C800EC23AE /* forward_button@2x.png */,
+				BFDC0F1219DFB6D000EC23AE /* chrome_activity.png */,
+				BFDC0F1319DFB6D000EC23AE /* chrome_activity@2x.png */,
+				BFDC0F1419DFB6D000EC23AE /* safari_activity.png */,
+				BFDC0F1519DFB6D000EC23AE /* safari_activity@2x.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		CC4E119C1794AD5500C539A5 = {
 			isa = PBXGroup;
 			children = (
 				CC4E11AE1794AD5500C539A5 /* RSTWebDemo */,
-				CC4E11D01794AD5500C539A5 /* RSTWebDemoTests */,
 				CC4E11A71794AD5500C539A5 /* Frameworks */,
 				CC4E11A61794AD5500C539A5 /* Products */,
 				F8D77DA3202246F187702A1A /* Pods.xcconfig */,
@@ -116,7 +108,6 @@
 			isa = PBXGroup;
 			children = (
 				CC4E11A51794AD5500C539A5 /* RSTWebDemo.app */,
-				CC4E11C91794AD5500C539A5 /* RSTWebDemoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -138,11 +129,9 @@
 			children = (
 				CC4E11B71794AD5500C539A5 /* AppDelegate.h */,
 				CC4E11B81794AD5500C539A5 /* AppDelegate.m */,
-				CC4E11BA1794AD5500C539A5 /* Main_iPhone.storyboard */,
-				CC4E11BD1794AD5500C539A5 /* Main_iPad.storyboard */,
+				CC4E11BA1794AD5500C539A5 /* Main.storyboard */,
 				CC4E11C01794AD5500C539A5 /* ViewController.h */,
 				CC4E11C11794AD5500C539A5 /* ViewController.m */,
-				CCEE288E17E131B700205302 /* RSTSafariActivity */,
 				CCD9FAAC17A119E3000B5750 /* RSTWebViewController */,
 				CC4E11C31794AD5500C539A5 /* Images.xcassets */,
 				CC4E11AF1794AD5500C539A5 /* Supporting Files */,
@@ -161,46 +150,18 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		CC4E11D01794AD5500C539A5 /* RSTWebDemoTests */ = {
-			isa = PBXGroup;
-			children = (
-				CC4E11D61794AD5500C539A5 /* RSTWebDemoTests.m */,
-				CC4E11D11794AD5500C539A5 /* Supporting Files */,
-			);
-			path = RSTWebDemoTests;
-			sourceTree = "<group>";
-		};
-		CC4E11D11794AD5500C539A5 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				CC4E11D21794AD5500C539A5 /* RSTWebDemoTests-Info.plist */,
-				CC4E11D31794AD5500C539A5 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		CCD9FAAC17A119E3000B5750 /* RSTWebViewController */ = {
 			isa = PBXGroup;
 			children = (
-				CCD9FAA517A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.h */,
-				CCD9FAA617A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m */,
-				CCD9FAA717A119DF000B5750 /* RSTWebViewController.h */,
-				CCD9FAA817A119DF000B5750 /* RSTWebViewController.m */,
-				CCF624A917F15BAA003B0FF1 /* RSTWebViewControllerProtocol.h */,
-				CCF624AA17F15BAA003B0FF1 /* RSTWebViewControllerProtocol.m */,
-				CCD9FAA417A119DF000B5750 /* Media.xcassets */,
+				BFDC0F0719DFB6BF00EC23AE /* RSTWebViewController.h */,
+				BFDC0F0819DFB6BF00EC23AE /* RSTWebViewController.m */,
+				BFDC0F1A19DFB6D500EC23AE /* RSTChromeActivity.h */,
+				BFDC0F1B19DFB6D500EC23AE /* RSTChromeActivity.m */,
+				BFDC0F1C19DFB6D500EC23AE /* RSTSafariActivity.h */,
+				BFDC0F1D19DFB6D500EC23AE /* RSTSafariActivity.m */,
+				BFDC0F2019DFB6DA00EC23AE /* Resources */,
 			);
 			name = RSTWebViewController;
-			sourceTree = "<group>";
-		};
-		CCEE288E17E131B700205302 /* RSTSafariActivity */ = {
-			isa = PBXGroup;
-			children = (
-				CCF624A317F15B62003B0FF1 /* RSTSafariActivity.h */,
-				CCF624A417F15B62003B0FF1 /* RSTSafariActivity.m */,
-				CC29A0D617E21755005AF95E /* safari@2x.png */,
-			);
-			name = RSTSafariActivity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,24 +186,6 @@
 			productReference = CC4E11A51794AD5500C539A5 /* RSTWebDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CC4E11C81794AD5500C539A5 /* RSTWebDemoTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CC4E11DD1794AD5500C539A5 /* Build configuration list for PBXNativeTarget "RSTWebDemoTests" */;
-			buildPhases = (
-				CC4E11C51794AD5500C539A5 /* Sources */,
-				CC4E11C61794AD5500C539A5 /* Frameworks */,
-				CC4E11C71794AD5500C539A5 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CC4E11CF1794AD5500C539A5 /* PBXTargetDependency */,
-			);
-			name = RSTWebDemoTests;
-			productName = RSTWebDemoTests;
-			productReference = CC4E11C91794AD5500C539A5 /* RSTWebDemoTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -251,11 +194,6 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Riley Testut";
-				TargetAttributes = {
-					CC4E11C81794AD5500C539A5 = {
-						TestTargetID = CC4E11A41794AD5500C539A5;
-					};
-				};
 			};
 			buildConfigurationList = CC4E11A01794AD5500C539A5 /* Build configuration list for PBXProject "RSTWebDemo" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -271,7 +209,6 @@
 			projectRoot = "";
 			targets = (
 				CC4E11A41794AD5500C539A5 /* RSTWebDemo */,
-				CC4E11C81794AD5500C539A5 /* RSTWebDemoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -281,20 +218,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCD9FAA917A119DF000B5750 /* Media.xcassets in Resources */,
-				CC4E11BF1794AD5500C539A5 /* Main_iPad.storyboard in Resources */,
+				BFDC0F1919DFB6D000EC23AE /* safari_activity@2x.png in Resources */,
 				CC4E11C41794AD5500C539A5 /* Images.xcassets in Resources */,
-				CC4E11BC1794AD5500C539A5 /* Main_iPhone.storyboard in Resources */,
-				CC29A0D717E21755005AF95E /* safari@2x.png in Resources */,
+				BFDC0F1719DFB6D000EC23AE /* chrome_activity@2x.png in Resources */,
+				BFDC0F0E19DFB6C800EC23AE /* back_button.png in Resources */,
+				BFDC0F1819DFB6D000EC23AE /* safari_activity.png in Resources */,
+				BFDC0F1119DFB6C800EC23AE /* forward_button@2x.png in Resources */,
+				BFDC0F0F19DFB6C800EC23AE /* back_button@2x.png in Resources */,
+				CC4E11BC1794AD5500C539A5 /* Main.storyboard in Resources */,
+				BFDC0F1619DFB6D000EC23AE /* chrome_activity.png in Resources */,
+				BFDC0F1019DFB6C800EC23AE /* forward_button.png in Resources */,
 				CC4E11B31794AD5500C539A5 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC4E11C71794AD5500C539A5 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CC4E11D51794AD5500C539A5 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,33 +270,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCF624AB17F15BAA003B0FF1 /* RSTWebViewControllerProtocol.m in Sources */,
-				CCF624A517F15B62003B0FF1 /* RSTSafariActivity.m in Sources */,
+				BFDC0F1F19DFB6D500EC23AE /* RSTSafariActivity.m in Sources */,
+				BFDC0F0919DFB6C000EC23AE /* RSTWebViewController.m in Sources */,
+				BFDC0F1E19DFB6D500EC23AE /* RSTChromeActivity.m in Sources */,
 				CC4E11C21794AD5500C539A5 /* ViewController.m in Sources */,
-				CCD9FAAB17A119DF000B5750 /* RSTWebViewController.m in Sources */,
-				CCD9FAAA17A119DF000B5750 /* NSURLSessionTask+UniqueTaskIdentifier.m in Sources */,
 				CC4E11B91794AD5500C539A5 /* AppDelegate.m in Sources */,
 				CC4E11B51794AD5500C539A5 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CC4E11C51794AD5500C539A5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CC4E11D71794AD5500C539A5 /* RSTWebDemoTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		CC4E11CF1794AD5500C539A5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CC4E11A41794AD5500C539A5 /* RSTWebDemo */;
-			targetProxy = CC4E11CE1794AD5500C539A5 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		CC4E11B11794AD5500C539A5 /* InfoPlist.strings */ = {
@@ -373,28 +290,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		CC4E11BA1794AD5500C539A5 /* Main_iPhone.storyboard */ = {
+		CC4E11BA1794AD5500C539A5 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				CC4E11BB1794AD5500C539A5 /* Base */,
 			);
-			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		CC4E11BD1794AD5500C539A5 /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CC4E11BE1794AD5500C539A5 /* Base */,
-			);
-			name = Main_iPad.storyboard;
-			sourceTree = "<group>";
-		};
-		CC4E11D31794AD5500C539A5 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CC4E11D41794AD5500C539A5 /* en */,
-			);
-			name = InfoPlist.strings;
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -498,46 +399,6 @@
 			};
 			name = Release;
 		};
-		CC4E11DE1794AD5500C539A5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RSTWebDemo.app/RSTWebDemo";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(SYSTEM_APPS_DIR)/Xcode5-DP3.app/Contents/Developer/Library/Frameworks",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RSTWebDemo/RSTWebDemo-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "RSTWebDemoTests/RSTWebDemoTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		CC4E11DF1794AD5500C539A5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RSTWebDemo.app/RSTWebDemo";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(SYSTEM_APPS_DIR)/Xcode5-DP3.app/Contents/Developer/Library/Frameworks",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RSTWebDemo/RSTWebDemo-Prefix.pch";
-				INFOPLIST_FILE = "RSTWebDemoTests/RSTWebDemoTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -555,15 +416,6 @@
 			buildConfigurations = (
 				CC4E11DB1794AD5500C539A5 /* Debug */,
 				CC4E11DC1794AD5500C539A5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CC4E11DD1794AD5500C539A5 /* Build configuration list for PBXNativeTarget "RSTWebDemoTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CC4E11DE1794AD5500C539A5 /* Debug */,
-				CC4E11DF1794AD5500C539A5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

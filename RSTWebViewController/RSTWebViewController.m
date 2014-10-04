@@ -302,9 +302,20 @@
     }
     else
     {
-        self.sharingPopoverController = [[UIPopoverController alloc] initWithContentViewController:activityViewController];
-        self.sharingPopoverController.delegate = self;
-        [self.sharingPopoverController presentPopoverFromBarButtonItem:barButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        if ([UIPresentationController class])
+        {
+            activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+            activityViewController.popoverPresentationController.barButtonItem = barButtonItem;
+            activityViewController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+            
+            [self presentViewController:activityViewController animated:YES completion:NULL];
+        }
+        else
+        {
+            self.sharingPopoverController = [[UIPopoverController alloc] initWithContentViewController:activityViewController];
+            self.sharingPopoverController.delegate = self;
+            [self.sharingPopoverController presentPopoverFromBarButtonItem:barButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        }
     }
 }
 
